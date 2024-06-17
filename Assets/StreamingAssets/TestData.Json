@@ -1,0 +1,9 @@
+{
+    "ThingID": "edu.whut.cs.iot.se:explosion",
+    "Feature": {
+        "type": "温压弹",
+        "strike_level": "一级",
+        "x_coordinate": 15.1,
+        "y_coordinate": 35.1
+    }
+}
