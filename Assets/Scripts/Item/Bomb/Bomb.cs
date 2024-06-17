@@ -24,7 +24,7 @@ public class Bomb : MonoBehaviour
     public float LifeTime = 10.0f; //生命周期，防止未发生碰撞炸弹一直存在
     public ParticleSystem ExplosionParticle; //爆炸粒子
     public AudioClip ExplosionAudio; //爆炸音效
-    private float BombRange;  //根据爆炸等级设置炸弹范围,TODO:影响范围显示
+    private float BombRange = 10.0f;  //根据爆炸等级设置炸弹范围,TODO:影响范围显示
     
     private void Awake()
     {
