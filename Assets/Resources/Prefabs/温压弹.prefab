@@ -39,7 +39,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609818758011025420}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e515b35d95400044fb4cc4f9f2888962, type: 3}
   m_Name: 
@@ -50,12 +50,12 @@ MonoBehaviour:
   scanOrigin: {fileID: 8512497242658625154}
   alwaysPassScanOriginPosition: 1
   alwaysPassScanOriginDirection: 1
-  scanDuration: 10
+  scanDuration: 2
   scansLeft: 0
-  timeLeft: -0.008720696
-  timePassed: 53.44296
+  timeLeft: -0.13442038
+  timePassed: 95.04777
   currentScanValueTesting: 1
-  scansNumberTesting: 1
+  scansNumberTesting: 4
   _Size: 10
   _SizeAdjust: 0
   _OriginOffset: 0
@@ -203,7 +203,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -254,7 +254,6 @@ MonoBehaviour:
   LifeTime: 10
   ExplosionParticle: {fileID: 0}
   ExplosionAudio: {fileID: 0}
-  ScanFX: {fileID: 2338878936642461594}
   speed: 100
   MinDistance: 0.5
 --- !u!1 &4911168262387059953

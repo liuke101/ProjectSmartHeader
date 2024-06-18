@@ -30,7 +30,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ScreenTexture:
-        m_Texture: {fileID: 2800000, guid: bf3a55c281459924e8d85653e6a9a5d6, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -48,42 +48,42 @@ Material:
     m_Ints: []
     m_Floats:
     - _CurrentScanValue: 1
-    - _DepthHardness: 1
+    - _DepthHardness: 0.9
     - _DepthPower: 5
     - _DepthThreshold: 1
     - _EdgeDetectionMultiplier: 1
     - _EdgeHardness: 0.8
-    - _EdgeMultiplier: 1
-    - _EdgePower: 10
+    - _EdgeMultiplier: 2
+    - _EdgePower: 5
     - _FovMask: 0.5
     - _FovMaskSmoothness: 0.2
-    - _Frequency: 3
+    - _Frequency: 0.68
     - _GridMultiplier: 1
-    - _HighlightMultiplier: 0.8
+    - _HighlightMultiplier: 0.718
     - _HighlightPower: 3
     - _MaskHardness: 0.5
     - _MaskPower: 1
     - _MaskRadius: 50
-    - _NormalsHardness: 0.351
+    - _NormalsHardness: 0
     - _NormalsOffset: 0.1
-    - _NormalsPower: 2.14
+    - _NormalsPower: 1
     - _OVERLAY: 3
-    - _OriginOffset: 2
+    - _OriginOffset: 0
     - _OverlayMultiplier: 1
     - _OverlayPower: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Ratio: 0.518
-    - _ScreenTextureTiling: 33.69
-    - _Size: 8
+    - _Ratio: 0.639
+    - _ScreenTextureTiling: 50
+    - _Size: 10
     - _SizeAdjust: 0
-    - _Thickness: 0.97
+    - _Thickness: 2
     m_Colors:
-    - _EdgeColor: {r: 0.73179066, g: 1.5221245, b: 7.4642644, a: 1}
-    - _Forward: {r: -0.05078867, g: -0.4649868, b: -0.88385963, a: 0}
-    - _HighlightColor: {r: 11.823846, g: 12.945071, b: 25.992073, a: 1}
-    - _Origin: {r: -0.057344962, g: 11.911784, b: 15.855972, a: 0}
-    - _OverlayColor: {r: 0, g: 7.376202, b: 145.31859, a: 1}
+    - _EdgeColor: {r: 4, g: 1.3893812, b: 0.39215684, a: 1}
+    - _Forward: {r: 0, g: 0, b: 1, a: 0}
+    - _HighlightColor: {r: 1, g: 0, b: 0.11301327, a: 1}
+    - _Origin: {r: 0.001, g: 0.001, b: 0.001, a: 0}
+    - _OverlayColor: {r: 4, g: 0, b: 0.052171707, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8331459826602276235
 MonoBehaviour:

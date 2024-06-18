@@ -110,6 +110,5 @@ MonoBehaviour:
   m_Name: ScanFXFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  scanMaterial: {fileID: -876546973899608171, guid: e530adf947b3976489321dfd7afbaa78,
-    type: 3}
+  scanMaterial: {fileID: 2100000, guid: 7b88ba40488576b468436cda0e0c405d, type: 2}
   Event: 450

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using INab.WorldScanFX.URP;
 using JsonStruct;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,8 +8,15 @@ using UnityEngine.Serialization;
 public class SpawnBombController : MonoSingleton<SpawnBombController>
 {
     public List<GameObject> BombObjects;
+    public ScanFX ScanFX;
+
+    protected override void Awake()
+    {
+        base.Awake(); 
+        ScanFX = GetComponent<ScanFX>();
+    }
     
-    
+    //暂时测试
     public void SpawnBomb()
     {
         if(BombObjects.Count == 0)
@@ -26,29 +34,31 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         var type = data.value.features.type.properties.value.ConvertTo<string>();
         var strike_level = data.value.features.strike_level.properties.value.ConvertTo<int>();
         //打印
-        Debug.Log("x_coordinate: " + x_coordinate + "   " +"y_coordinate: " + y_coordinate + "   " +"type: " + type + "   "+ "strike_level: " + strike_level);
+        //Debug.Log("x_coordinate: " + x_coordinate + "   " +"y_coordinate: " + y_coordinate + "   " +"type: " + type + "   "+ "strike_level: " + strike_level);
         
         //根据strike_level获取对应的BombLevel枚举
-         BombLevel bombLevel = BombLevel.ONE;
-         switch (strike_level)
+         EBombLevel eBombLevel = EBombLevel.ONE;
+         switch (Random.Range(1,4)) //strike_level
          {
              case 1:
-                 bombLevel = BombLevel.ONE;
+                 eBombLevel = EBombLevel.ONE;
                  break;
              case 2:
-                 bombLevel = BombLevel.TWO;
+                 eBombLevel = EBombLevel.TWO;
                  break;
              case 3:
-                 bombLevel = BombLevel.THREE;
+                 eBombLevel = EBombLevel.THREE;
                  break;
              case 4:
-                 bombLevel = BombLevel.FOUR;
+                 eBombLevel = EBombLevel.FOUR;
                  break;
          }
+         Debug.Log("爆炸登记: " + eBombLevel);
          
-         Vector3 SpawnPosion = new Vector3(Random.Range(100, 200), 100,Random.Range(100, 200));
-         Vector3 TargetPosition = new Vector3(x_coordinate, 0, y_coordinate);
          
+         Vector3 SpawnPosion = new Vector3(Random.Range(-200, 200), 100,Random.Range(-200, 200));
+         // Vector3 TargetPosition = new Vector3(x_coordinate, 0, y_coordinate);
+         Vector3 TargetPosition = new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20));
          //在生成位置生成一个空物体，用于确定发射角度和位置
          GameObject SpawnPoint = new GameObject();
          SpawnPoint.transform.position = SpawnPosion;
@@ -57,21 +67,23 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
          GameObject TargetPoint = new GameObject();
          TargetPoint.transform.position = TargetPosition;
          
+         // TODO:在Bomb类中用委托进行销毁，跟随炸弹销毁
+         // Destroy(SpawnPoint);
+         // Destroy(TargetPoint);
+         
          //根据type生成对应类型的炸弹
          switch (type)
          {
              case "温压弹":
-                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().BombType == BombType.温压弹).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, bombLevel);
+                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.温压弹).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, eBombLevel);
                  break;
              case "堵口爆":
-                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().BombType == BombType.堵口爆).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, bombLevel);
+                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.堵口爆).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, eBombLevel);
                  break;
              case "核弹":
-                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().BombType == BombType.核弹).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, bombLevel);
+                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.核弹).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, eBombLevel);
                  break;
          }
-         // 注意gc
-         // Destroy(SpawnPoint);
-         // Destroy(TargetPoint);
     }
+
 }
