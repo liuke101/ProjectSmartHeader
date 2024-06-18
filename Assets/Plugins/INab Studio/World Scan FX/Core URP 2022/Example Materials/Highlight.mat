@@ -151,7 +151,7 @@ Material:
     - _Cull: 2
     - _CullMode: 2
     - _CullModeForward: 2
-    - _CurrentScanValue: 1
+    - _CurrentScanValue: 1.65
     - _Cutoff: 0
     - _DepthOffsetEnable: 0
     - _DetailAlbedoMapScale: 1
@@ -191,7 +191,7 @@ Material:
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
     - _Rim_Power: 0.88
-    - _Size: 16
+    - _Size: 10
     - _SizeAdjust: 0
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using INab.WorldScanFX.URP;
 using JsonStruct;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class SpawnBombController : MonoSingleton<SpawnBombController>
 {
@@ -72,18 +74,58 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
          // Destroy(TargetPoint);
          
          //根据type生成对应类型的炸弹
+         GameObject BombObject = null;
          switch (type)
          {
              case "温压弹":
-                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.温压弹).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, eBombLevel);
+                 BombObject = BombObjects.Find(bombobject =>
+                     bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.温压弹);
                  break;
              case "堵口爆":
-                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.堵口爆).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, eBombLevel);
+                 BombObject = BombObjects.Find(bombobject =>
+                     bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.堵口爆);
                  break;
              case "核弹":
-                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.核弹).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, eBombLevel);
+                 BombObject = BombObjects.Find(bombobject =>
+                     bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.温压弹);
                  break;
          }
+
+         if (BombObject != null)
+         {
+             SpawnBomb(BombObject, SpawnPoint.transform, TargetPoint.transform, eBombLevel);
+         }
+         
+    }
+    
+    public virtual void SpawnBomb(GameObject BombObject, Transform SpawnPointTransform, Transform TargetPointTransfrom, EBombLevel level)
+    {
+        //生成炸弹
+        Bomb bomb = Instantiate(BombObject.GetComponentInChildren<Bomb>(), SpawnPointTransform.position, SpawnPointTransform.rotation);
+        bomb.TargetPointTransform = TargetPointTransfrom;
+        
+        //根据等级设置扫描范围
+        //BUG:无效
+        if (ScanFX)
+        {
+            switch (level)
+            {
+                case EBombLevel.ONE:
+                    ScanFX.MaskRadius = 1.0f;
+                    break;
+                case EBombLevel.TWO:
+                    ScanFX.MaskRadius = 50.0f;
+                    break;
+                case EBombLevel.THREE:
+                    ScanFX.MaskRadius = 100.0f;
+                    break;
+                case EBombLevel.FOUR:
+                    ScanFX.MaskRadius = 200.0f;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 
 }

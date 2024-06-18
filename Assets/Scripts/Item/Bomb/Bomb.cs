@@ -28,25 +28,19 @@ public class Bomb : MonoBehaviour
     public float LifeTime = 10.0f; //生命周期，防止未发生碰撞炸弹一直存在
     public ParticleSystem ExplosionParticle; //爆炸粒子
     public AudioClip ExplosionAudio; //爆炸音效
-    private float BombRange = 10.0f;  //根据爆炸等级设置炸弹范围,TODO:影响范围显示
-    private Rigidbody Rigidbody;
-    private EBombLevel BombLevel;
     
     [Header("抛物线")]
-    // 目标点Transform
-    private Transform TargetPointTransform; 
-    // 运动速度
-    public float speed = 10;
-    // 最小接近距离, 以停止运动
-    public float MinDistance = 0.5f;
+    [HideInInspector]
+    public Transform TargetPointTransform;  // 目标点Transform
+    public float speed = 10; // 运动速度
+    public float MinDistance = 0.5f; // 最小接近距离, 以停止运动
     private float DistanceToTarget;
     private bool bCanMove = true;
 
     private void Awake()
     {
-        Rigidbody = GetComponent<Rigidbody>();
         gameObject.layer = LayerMask.NameToLayer("Bomb"); //设置炸弹层
-        Rigidbody.excludeLayers = LayerMask.GetMask("Bomb"); //排除炸弹之间的碰撞
+        GetComponent<Rigidbody>().excludeLayers = LayerMask.GetMask("Bomb"); //排除炸弹之间的碰撞
     }
 
     private void Start()
@@ -57,43 +51,19 @@ public class Bomb : MonoBehaviour
         DistanceToTarget = Vector3.Distance(transform.position, TargetPointTransform.position);
         StartCoroutine(Launch());
     }
-
-    private void Update()
-    {
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-       
-    }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         Explosion(); //碰撞后爆炸
     }
-
-    public virtual void SpawnBomb(Transform SpawnPointTransform, Transform TargetPointTransfrom, EBombLevel level)
-    {
-        //生成炸弹
-        Bomb bomb = Instantiate(gameObject.GetComponent<Bomb>(), SpawnPointTransform.position, SpawnPointTransform.rotation);
-        bomb.TargetPointTransform = TargetPointTransfrom;
-        bomb.BombLevel = level;
-        
-        //根据爆炸等级设置MaskRadius和Size
-        if(bomb.GetComponent<ScanFX>())
-        {
-            // bomb.GetComponent<ScanFX>().MaskRadius = 
-            // bomb.GetComponent<ScanFX>().Size = 
-        }
-    }
     
     protected virtual void Explosion()
     {
-        //爆炸粒子
+        //爆炸粒子f
         if(ExplosionParticle)
         {
             ParticleSystem Explosion = Instantiate(ExplosionParticle, transform.position, Quaternion.identity); 
-            Destroy(Explosion, 2.0f);
+            Destroy(Explosion.gameObject, 30.0f); //销毁时间待定
         }
         
         //爆炸音效
@@ -105,25 +75,6 @@ public class Bomb : MonoBehaviour
         //扫描线
         if (SpawnBombController.Instance.ScanFX)
         {
-            //根据等级设置扫描范围
-            switch (BombLevel)
-            {
-                case EBombLevel.ONE:
-                    SpawnBombController.Instance.ScanFX.MaskRadius = 1.0f;
-                    break;
-                case EBombLevel.TWO:
-                    SpawnBombController.Instance.ScanFX.MaskRadius = 5.0f;
-                    break;
-                case EBombLevel.THREE:
-                    SpawnBombController.Instance.ScanFX.MaskRadius = 10.0f;
-                    break;
-                case EBombLevel.FOUR:
-                    SpawnBombController.Instance.ScanFX.MaskRadius = 20.0f;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            
             //设置扫描线的新位置
             SpawnBombController.Instance.ScanFX.PassCustomScanOriginProperties(transform);
             

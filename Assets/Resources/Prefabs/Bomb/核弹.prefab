@@ -250,9 +250,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5fbf5587f443b49055ea5348846bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BombType: 0
+  EBombType: 2
   LifeTime: 10
-  ExplosionParticle: {fileID: 0}
+  ExplosionParticle: {fileID: 1835311064162197329, guid: 23f13114e94c44d43906a0a37dc3e27d,
+    type: 3}
   ExplosionAudio: {fileID: 0}
   speed: 100
   MinDistance: 0.5
@@ -266,7 +267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5188720124191948010}
   m_Layer: 6
-  m_Name: "\u6E29\u538B\u5F39"
+  m_Name: "\u6838\u5F39"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
