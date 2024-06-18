@@ -1,9 +1,34 @@
 {
-    "ThingID": "edu.whut.cs.iot.se:explosion",
-    "Feature": {
-        "type": "温压弹",
-        "strike_level": "一级",
-        "x_coordinate": 15.1,
-        "y_coordinate": 35.1
+    "headers": {
+        "correlation-id": "090397",
+        "content-type": "application/merge-patch+json"
+    },
+    "path": "/",
+    "topic": "edu.whut.cs.iot.se/explosion/things/twin/commands/modify",
+    "value": {
+        "features": {
+            "x_coordinate": {
+                "properties": {
+                    "value": 21.973
+                }
+            },
+            "strike_level": {
+                "properties": {
+                    "value": 4
+                }
+            },
+            "type": {
+                "properties": {
+                    "value": "温压弹"
+                }
+            },
+            "y_coordinate": {
+                "properties": {
+                    "value": 16.874
+                }
+            }
+        },
+        "policyId": "ditto.default:policy",
+        "thingId": "edu.whut.cs.iot.se:explosion"
     }
 }

@@ -1,64 +1,77 @@
 ﻿using System.Collections.Generic;
 using JsonStruct;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SpawnBombController : MonoSingleton<SpawnBombController>
 {
-    public List<Bomb> Bombs;
+    public List<GameObject> BombObjects;
+    
     
     public void SpawnBomb()
     {
-        //1. 创建一个类对象
+        if(BombObjects.Count == 0)
+        {
+            Debug.LogError("BombObjects 为空");
+            return;
+        }
         
-        //创建一个string，随机生成一个炸弹类型
-        string[] Types = new string[] {"温压弹", "堵口爆", "核弹"};
-        string Type = Types[Random.Range(0, 3)];
+        // 读取json
+        ExplosiveSourceData data = JsonDataManager.Instance.LoadData<ExplosiveSourceData>("TestData");
         
-        //随机等级
-        string[] Levels = new string[] {"一级", "二级", "三级", "四级"};
-        string Level = Levels[Random.Range(0, 4)];
-        
-        Feature feature = new Feature(Type,Level, Random.Range(0, 10), Random.Range(0, 10));
-        ExplosiveSourceData data = new ExplosiveSourceData("edu.whut.cs.iot.se:explosion", feature);
-        
-        //如果有，处理数据，落点，爆炸。。。
-        print(data.ThingID);
-        print(data.Feature.type);
-        print(data.Feature.strike_level);
-        print(data.Feature.x_coordinate);
-        print(data.Feature.y_coordinate);
+        //读取数据，并转换到对应的类型
+        var x_coordinate = data.value.features.x_coordinate.properties.value.ConvertTo<float>();
+        var y_coordinate = data.value.features.y_coordinate.properties.value.ConvertTo<float>();
+        var type = data.value.features.type.properties.value.ConvertTo<string>();
+        var strike_level = data.value.features.strike_level.properties.value.ConvertTo<int>();
+        //打印
+        Debug.Log("x_coordinate: " + x_coordinate + "   " +"y_coordinate: " + y_coordinate + "   " +"type: " + type + "   "+ "strike_level: " + strike_level);
         
         //根据strike_level获取对应的BombLevel枚举
-        BombLevel bombLevel = BombLevel.ONE;
-        switch (data.Feature.strike_level)
-        {
-            case "一级":
-                bombLevel = BombLevel.ONE;
-                break;
-            case "二级":
-                bombLevel = BombLevel.TWO;
-                break;
-            case "三级":
-                bombLevel = BombLevel.THREE;
-                break;
-            case "四级":
-                bombLevel = BombLevel.FOUR;
-                break;
-        }
-
-        switch (data.Feature.type)
-        {
-            case "温压弹":
-                Bombs.Find(bomb => bomb.BombType == BombType.温压弹).SpawnBomb(new Vector3(data.Feature.x_coordinate, 10, data.Feature.y_coordinate), bombLevel);
-                break;
-            case "堵口爆":
-                Bombs.Find(bomb => bomb.BombType == BombType.堵口爆)
-                    .SpawnBomb(new Vector3(data.Feature.x_coordinate, 10, data.Feature.y_coordinate), bombLevel);
-                break;
-            case "核弹":
-                Bombs.Find(bomb => bomb.BombType == BombType.核弹)
-                    .SpawnBomb(new Vector3(data.Feature.x_coordinate, 10, data.Feature.y_coordinate), bombLevel);
-                break;
-        }
+         BombLevel bombLevel = BombLevel.ONE;
+         switch (strike_level)
+         {
+             case 1:
+                 bombLevel = BombLevel.ONE;
+                 break;
+             case 2:
+                 bombLevel = BombLevel.TWO;
+                 break;
+             case 3:
+                 bombLevel = BombLevel.THREE;
+                 break;
+             case 4:
+                 bombLevel = BombLevel.FOUR;
+                 break;
+         }
+         
+         Vector3 SpawnPosion = new Vector3(Random.Range(100, 200), 100,Random.Range(100, 200));
+         Vector3 TargetPosition = new Vector3(x_coordinate, 0, y_coordinate);
+         
+         //在生成位置生成一个空物体，用于确定发射角度和位置
+         GameObject SpawnPoint = new GameObject();
+         SpawnPoint.transform.position = SpawnPosion;
+         SpawnPoint.transform.rotation = Quaternion.Euler(-60, 0, 0); //上斜60度
+         //在目标位置生成一个空物体，用于定位
+         GameObject TargetPoint = new GameObject();
+         TargetPoint.transform.position = TargetPosition;
+         
+         //根据type生成对应类型的炸弹
+         switch (type)
+         {
+             case "温压弹":
+                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().BombType == BombType.温压弹).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, bombLevel);
+                 break;
+             case "堵口爆":
+                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().BombType == BombType.堵口爆).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, bombLevel);
+                 break;
+             case "核弹":
+                 BombObjects.Find(bombobject => bombobject.GetComponentInChildren<Bomb>().BombType == BombType.核弹).GetComponentInChildren<Bomb>().SpawnBomb( SpawnPoint.transform, TargetPoint.transform, bombLevel);
+                 break;
+         }
+         // 注意gc
+         // Destroy(SpawnPoint);
+         // Destroy(TargetPoint);
     }
 }

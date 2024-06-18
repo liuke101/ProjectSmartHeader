@@ -47,7 +47,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CurrentScanValue: 0.244
+    - _CurrentScanValue: 1
     - _DepthHardness: 1
     - _DepthPower: 5
     - _DepthThreshold: 1
@@ -61,14 +61,14 @@ Material:
     - _GridMultiplier: 1
     - _HighlightMultiplier: 0.8
     - _HighlightPower: 3
-    - _MaskHardness: 0.8
+    - _MaskHardness: 0.5
     - _MaskPower: 1
-    - _MaskRadius: 25
+    - _MaskRadius: 50
     - _NormalsHardness: 0.351
     - _NormalsOffset: 0.1
     - _NormalsPower: 2.14
     - _OVERLAY: 3
-    - _OriginOffset: 2.9
+    - _OriginOffset: 2
     - _OverlayMultiplier: 1
     - _OverlayPower: 1
     - _QueueControl: 0
@@ -76,13 +76,13 @@ Material:
     - _Ratio: 0.518
     - _ScreenTextureTiling: 33.69
     - _Size: 8
-    - _SizeAdjust: 0.33
+    - _SizeAdjust: 0
     - _Thickness: 0.97
     m_Colors:
     - _EdgeColor: {r: 0.73179066, g: 1.5221245, b: 7.4642644, a: 1}
-    - _Forward: {r: 0, g: 0, b: 1, a: 0}
+    - _Forward: {r: -0.05078867, g: -0.4649868, b: -0.88385963, a: 0}
     - _HighlightColor: {r: 11.823846, g: 12.945071, b: 25.992073, a: 1}
-    - _Origin: {r: 0.001, g: 1.23, b: 0.001, a: 0}
+    - _Origin: {r: -0.057344962, g: 11.911784, b: 15.855972, a: 0}
     - _OverlayColor: {r: 0, g: 7.376202, b: 145.31859, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8331459826602276235
