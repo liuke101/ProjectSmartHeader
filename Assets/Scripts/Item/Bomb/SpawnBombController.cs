@@ -80,7 +80,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
                  eBombLevel = EBombLevel.FOUR;
                  break;
          }
-         Debug.Log("爆炸登记: " + eBombLevel);
+         Debug.Log("爆炸等级: " + eBombLevel);
          
          
          Vector3 SpawnPosion = new Vector3(Random.Range(-200, 200), 100,Random.Range(-200, 200));
@@ -136,19 +136,17 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
             switch (level)
             {
                 case EBombLevel.ONE:
-                    ScanFX.MaskRadius = 1.0f;
-                    break;
-                case EBombLevel.TWO:
                     ScanFX.MaskRadius = 50.0f;
                     break;
-                case EBombLevel.THREE:
+                case EBombLevel.TWO:
                     ScanFX.MaskRadius = 100.0f;
                     break;
-                case EBombLevel.FOUR:
+                case EBombLevel.THREE:
                     ScanFX.MaskRadius = 200.0f;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                case EBombLevel.FOUR:
+                    ScanFX.MaskRadius = 500.0f;
+                    break;
             }
         }
     }
