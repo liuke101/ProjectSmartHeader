@@ -151,7 +151,7 @@ Material:
     - _Cull: 2
     - _CullMode: 2
     - _CullModeForward: 2
-    - _CurrentScanValue: 1.73
+    - _CurrentScanValue: 0
     - _Cutoff: 0
     - _DepthOffsetEnable: 0
     - _DetailAlbedoMapScale: 1
@@ -166,17 +166,17 @@ Material:
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
     - _EnvironmentReflections: 1
-    - _FovMask: 0.5
-    - _FovMaskSmoothness: 0.2
+    - _FovMask: 1
+    - _FovMaskSmoothness: 1
     - _FovMaskSmothness: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HighlighValue: 1
     - _HighlightValue: 1
-    - _MaskHardness: 0.5
+    - _MaskHardness: 0.8
     - _MaskPower: 1
-    - _MaskRadius: 50
+    - _MaskRadius: 20
     - _Metallic: 0
     - _OcclusionStrength: 0
     - _OpaqueCullMode: 2
@@ -191,7 +191,7 @@ Material:
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
     - _Rim_Power: 0.88
-    - _Size: 10
+    - _Size: 12
     - _SizeAdjust: 0
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
