@@ -151,7 +151,7 @@ Material:
     - _Cull: 2
     - _CullMode: 2
     - _CullModeForward: 2
-    - _CurrentScanValue: 1.65
+    - _CurrentScanValue: 1.73
     - _Cutoff: 0
     - _DepthOffsetEnable: 0
     - _DetailAlbedoMapScale: 1

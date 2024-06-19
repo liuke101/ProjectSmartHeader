@@ -47,7 +47,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CurrentScanValue: 1.65
+    - _CurrentScanValue: 1.73
     - _DepthHardness: 1
     - _DepthPower: 5
     - _DepthThreshold: 3
