@@ -41,6 +41,8 @@ public class Bomb : MonoBehaviour
     {
         gameObject.layer = LayerMask.NameToLayer("Bomb"); //设置炸弹层
         GetComponent<Rigidbody>().excludeLayers = LayerMask.GetMask("Bomb"); //排除炸弹之间的碰撞
+        GetComponent<Collider>().excludeLayers = LayerMask.GetMask("Bomb"); //排除炸弹之间的碰撞
+        GetComponent<Collider>().isTrigger = true; //设置为触发器
     }
 
     private void Start()
@@ -100,7 +102,7 @@ public class Bomb : MonoBehaviour
             // 根据距离衰减 角度
             float angle = Mathf.Min(1, Vector3.Distance(transform.position, targetPos) / DistanceToTarget) * 45;
             // 旋转对应的角度（线性插值一定角度，然后每帧绕X轴旋转）
-            transform.rotation = transform.rotation * Quaternion.Euler(Mathf.Clamp(-angle, -42, 42), 0, 0);
+            transform.rotation *= Quaternion.Euler(Mathf.Clamp(-angle, -42, 42), 0, 0);
             // 当前距离目标点
             float currentDist = Vector3.Distance(transform.position, TargetPointTransform.position);
             // 很接近目标了, 准备结束循环
@@ -120,7 +122,7 @@ public class Bomb : MonoBehaviour
             // [停止]当前协程任务,参数是协程方法名
             StopCoroutine(Launch());
             // 销毁脚本
-            GameObject.Destroy(this);
+            Destroy(this);
         }
     }
 }

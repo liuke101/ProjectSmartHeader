@@ -35,7 +35,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         // 读取json
         ExplosiveSourceData data = JsonDataManager.Instance.LoadData<ExplosiveSourceData>("TestData");
         
-        //读取数据，并转换到对应的类型
+        //读取数据，并转换到对应的类型(必须这样转换，不能直接强转！）
         double x_coordinate = 0;
         if (data.value.features.x_coordinate.properties.value is double x)
         {
@@ -65,7 +65,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         
         //根据strike_level获取对应的BombLevel枚举
          EBombLevel eBombLevel = EBombLevel.ONE;
-         switch (Random.Range(1,4)) //strike_level
+         switch (Random.Range(1,5)) //strike_level，注意是左闭右开[1,5)
          {
              case 1:
                  eBombLevel = EBombLevel.ONE;
@@ -100,16 +100,16 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
          //根据type生成对应类型的炸弹
          
          GameObject BombObject = null;
-         switch (2) //type
+         switch (Random.Range(0,3)) //type
          {
-             // case 0:
-             //     BombObject = BombObjects.Find(bombobject =>
-             //         bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.温压弹);
-             //     break;
-             // case 1:
-             //     BombObject = BombObjects.Find(bombobject =>
-             //         bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.堵口爆);
-             //     break;
+             case 0:
+                 BombObject = BombObjects.Find(bombobject =>
+                     bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.温压弹);
+                 break;
+             case 1:
+                 BombObject = BombObjects.Find(bombobject =>
+                     bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.堵口爆);
+                 break;
              case 2:
                  BombObject = BombObjects.Find(bombobject =>
                      bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.核弹);
