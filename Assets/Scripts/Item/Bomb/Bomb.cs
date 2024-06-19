@@ -59,7 +59,7 @@ public class Bomb : MonoBehaviour
     
     protected virtual void Explosion()
     {
-        //爆炸粒子f
+        //爆炸粒子
         if(ExplosionParticle)
         {
             ParticleSystem Explosion = Instantiate(ExplosionParticle, transform.position, Quaternion.identity); 

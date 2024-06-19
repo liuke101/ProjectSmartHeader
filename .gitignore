@@ -75,3 +75,6 @@ crashlytics-build.properties
 # scene
 /[Aa]ssets/[Gg]ame[Ss]cene/
 /[Aa]ssets/[Mm]odels/
+
+# custom
+TestPackage/
