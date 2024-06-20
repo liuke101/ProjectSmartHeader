@@ -185,5 +185,5 @@ MonoBehaviour:
   ExplosionParticle: {fileID: 0}
   ExplosionAudio: {fileID: 0}
   TargetPosition: {x: 0, y: 0, z: 0}
-  speed: 300
+  speed: 1000
   MinDistance: 0.5

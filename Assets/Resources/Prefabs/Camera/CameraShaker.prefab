@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9da73e1bfedb57418eb344344877d2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraObject: {fileID: 458539505735076531}
+  cameraObject: {fileID: 3694796184585577195}
   amplitude: 0
   frequency: 0
   duration: 0

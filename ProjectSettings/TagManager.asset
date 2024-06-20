@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
-  - Global
+  - Camera
   layers:
   - Default
   - TransparentFX

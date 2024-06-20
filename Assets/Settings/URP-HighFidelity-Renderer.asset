@@ -53,8 +53,8 @@ MonoBehaviour:
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
-  - {fileID: 7908744998905825006}
-  m_RendererFeatureMap: adc0de57c6d2eee5eec6ed96ac81c16d
+  - {fileID: 3691048337573189505}
+  m_RendererFeatureMap: adc0de57c6d2eee58197d831e83c3933
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
---- !u!114 &7908744998905825006
+--- !u!114 &3691048337573189505
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,4 +111,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   scanMaterial: {fileID: 2100000, guid: 7b88ba40488576b468436cda0e0c405d, type: 2}
+  Event: 450
+--- !u!114 &7908744998905825006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2405970a942c0584cb60940ba0199bda, type: 3}
+  m_Name: ScanFXFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  scanMaterial: {fileID: 0}
   Event: 450

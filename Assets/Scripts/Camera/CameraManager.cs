@@ -1,49 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.Events;
 
-namespace Common
+public class CameraManager :  MonoSingleton<CameraManager>
 {
-    public class CameraManager : MonoSingleton<CameraManager>
+    public GameObject MainCamera;
+    public List<GameObject> SceneCameras;
+    
+    public UnityEvent<GameObject> SwitchCameraEvent;
+
+    private void Start()
     {
-        public Camera MainCamera;
-        public List<GameObject> OtherCameras;
-        
-        private void Start()
+        if (MainCamera != null)
         {
-            MainCamera = Camera.main;
+            SwitchCameraEvent?.Invoke(MainCamera);
         }
+    }
 
-        //切换到主相机
-        public void SwitchMainCamera()
+    public void SwitchCamera(GameObject cam)
+    {
+        if (SceneCameras.Count > 0)
         {
-            MainCamera.enabled = true;
-
-            foreach (var cam in OtherCameras)
+            foreach (var Tmp in SceneCameras)
             {
-                if (cam.activeSelf)
+                if (Tmp.activeSelf)
                 {
-                    cam.SetActive(false);
+                    Tmp.SetActive(false);
                 }
             }
         }
-        
-        //切换到指定震动相机
-        public void SwitchCamera(GameObject cam)
+
+        if (cam != null)
         {
-            foreach (var othercam in OtherCameras)
-            {
-                if (othercam.activeSelf)
-                {
-                    othercam.SetActive(false);
-                }
-            }
-            MainCamera.enabled = false;
             cam.SetActive(true);
+            SwitchCameraEvent?.Invoke(cam);
         }
-
-        
     }
 }
