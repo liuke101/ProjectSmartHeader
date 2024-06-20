@@ -13,8 +13,6 @@ public class ExplosionWarning : MonoBehaviour
 
     public void UpdateExplosionData(ExplosionData explosionData)
     {
-        Debug.Log("ExplosionWarning: " + explosionData.BombType + " " + explosionData.StrikeLevel + " " + explosionData.X_Coordinate + " " + explosionData.Y_Coordinate);
-
         if (_textMeshPro)
         {
             string line1 = "检测到爆源！\n";

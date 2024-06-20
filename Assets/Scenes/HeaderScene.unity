@@ -1238,7 +1238,7 @@ MonoBehaviour:
   scansLeft: 0
   timeLeft: 9999
   timePassed: 0
-  currentScanValueTesting: 0.22
+  currentScanValueTesting: 0
   scansNumberTesting: 1
   _Size: 50
   _SizeAdjust: 0

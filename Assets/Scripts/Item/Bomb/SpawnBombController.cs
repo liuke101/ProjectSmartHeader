@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using INab.WorldScanFX.URP;
+using JsonStruct;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -38,34 +39,6 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
             return;
         }
         
-        // // 读取json
-        // ExplosiveSourceData data = JsonDataManager.Instance.LoadData<ExplosiveSourceData>("TestData");
-        //
-        // //读取数据，并转换到对应的类型(必须这样转换，不能直接强转！）
-        // double x_coordinate = 0;
-        // if (data.value.features.x_coordinate.properties.value is double x)
-        // {
-        //     x_coordinate = x;
-        // }
-        //
-        // double y_coordinate = 0;
-        // if (data.value.features.y_coordinate.properties.value is double y)
-        // {
-        //     y_coordinate = y;
-        // }
-        //
-        // string type = "";
-        // if (data.value.features.type.properties.value is string t)
-        // {
-        //     type = t;
-        // }
-        //
-        // int strike_level = 0;
-        // if (data.value.features.strike_level.properties.value is int s)
-        // {
-        //     strike_level = s;
-        // }
-        
         //暂时随机生成
          int StrikeLevel = Random.Range(1, 5);
          Vector3 SpawnPosion = new Vector3(Random.Range(-SpawnRange, SpawnRange), SpwanHeight,Random.Range(-SpawnRange, SpawnRange));
@@ -78,7 +51,6 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
          // Destroy(TargetPoint);
          
          //根据type生成对应类型的炸弹
-         
          GameObject BombObject = null;
          switch (Random.Range(0,3)) //type
          {
@@ -148,4 +120,65 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         // }
     }
 
+    public void SpawnBombTest(ExplosiveSourceData data)
+    {
+        //读取数据，并转换到对应的类型(必须这样转换，不能直接强转！）
+        double x_coordinate = 0;
+        if (data.value.features.x_coordinate.properties.value is double x)
+        {
+            x_coordinate = x;
+        }
+
+        double y_coordinate = 0;
+        if (data.value.features.y_coordinate.properties.value is double y)
+        {
+            y_coordinate = y;
+        }
+
+        string type = "";
+        if (data.value.features.type.properties.value is string t)
+        {
+            type = t;
+        }
+
+        int strike_level = 0;
+        if (data.value.features.strike_level.properties.value is int s)
+        {
+            strike_level = s;
+        }
+
+        print("x_coordinate: " + x_coordinate + " y_coordinate: " + y_coordinate + " type: " + type +
+              " strike_level: " + strike_level);
+
+        int StrikeLevel = strike_level;
+
+        Vector3 SpawnPosion = new Vector3(Random.Range(-SpawnRange, SpawnRange), SpwanHeight,
+            Random.Range(-SpawnRange, SpawnRange));
+        Quaternion SpwanRotation = Quaternion.AngleAxis(-80, Vector3.right); //四元数绕x轴旋转-80度
+
+        Vector3 TargetPosition = new Vector3((float)x_coordinate, 0, (float)y_coordinate);
+
+        //根据type生成对应类型的炸弹
+        GameObject BombObject = null;
+        switch (type) //type
+        {
+            case "温压弹":
+                BombObject = BombObjects.Find(bombobject =>
+                    bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.温压弹);
+                break;
+            case "堵口爆":
+                BombObject = BombObjects.Find(bombobject =>
+                    bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.堵口爆);
+                break;
+            case "核弹":
+                BombObject = BombObjects.Find(bombobject =>
+                    bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.核弹);
+                break;
+        }
+
+        if (BombObject != null)
+        {
+            SpawnBomb(BombObject, SpawnPosion, SpwanRotation, TargetPosition, StrikeLevel);
+        }
+    }
 }
