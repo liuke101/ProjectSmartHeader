@@ -4,11 +4,14 @@ using System.Threading;
 using UnityEngine;
 using System.Collections.Concurrent;
 using System.Text;
+using JsonStruct;
+using LitJson;
+using UnityEngine.Events;
 
-class KafkaConsumer : MonoBehaviour
+class KafkaConsumer : MonoSingleton<KafkaConsumer>
 {
 
-    [System.Serializable]
+    [Serializable]
     public class threadHandle
     {
         // IConsumer<Ignore, string> c;
@@ -76,6 +79,9 @@ class KafkaConsumer : MonoBehaviour
     public bool kafkaStarted = false;
     Thread kafkaThread;
     threadHandle _handle;
+    
+    //接收到爆源数据时进行广播
+    public UnityEvent<ExplosiveSourceData> OnKafkaMessageReceived;
 
     void Start()
     {
@@ -96,7 +102,13 @@ class KafkaConsumer : MonoBehaviour
     {
         StopKafkaThread();
     }
+    
     void OnApplicationQuit()
+    {
+        StopKafkaThread();
+    }
+
+    private void OnDestroy()
     {
         StopKafkaThread();
     }
@@ -119,7 +131,18 @@ class KafkaConsumer : MonoBehaviour
             string message;
             while (_handle._queue.TryDequeue(out message))
             {
-                Debug.Log(message);
+                //判断message是否包含"explosion"
+                if (message.Contains("explosion"))
+                {
+                    Debug.Log(message);
+                    ExplosiveSourceData data = JsonMapper.ToObject<ExplosiveSourceData>(message);
+                    
+                    //广播有效数据
+                    if(data != null)
+                    {
+                        OnKafkaMessageReceived?.Invoke(data);
+                    }
+                }
             }
         }
     }

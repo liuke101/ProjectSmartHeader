@@ -25,11 +25,6 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         base.Awake(); 
         ScanFX = GetComponent<ScanFX>();
     }
-
-    private void Start()
-    {
-    }
-
     
     //暂时测试
     public void SpawnBomb()
@@ -97,7 +92,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         
         // 根据等级设置扫描范围
         // BUG:无效
-         if (ScanFX)
+         if (ScanFX && StrikeLevelData.Range.Count >= 4)
          {
              switch (StrikeLevel)
              {
@@ -126,40 +121,44 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         }
         
         //读取数据，并转换到对应的类型(必须这样转换，不能直接强转！）
-        double x_coordinate = 0;
-        if (data.value.features.x_coordinate.properties.value is double x)
-        {
-            x_coordinate = x;
-        }
+        // double x_coordinate = 0;
+        // if (data.value.features.x_coordinate.properties.value is double x)
+        // {
+        //     x_coordinate = x;
+        // }
+        //
+        // double y_coordinate = 0;
+        // if (data.value.features.y_coordinate.properties.value is double y)
+        // {
+        //     y_coordinate = y;
+        // }
+        //
+        // string type = "";
+        // if (data.value.features.type.properties.value is string t)
+        // {
+        //     type = t;
+        // }
+        //
+        // int strike_level = 0;
+        // if (data.value.features.strike_level.properties.value is int s)
+        // {
+        //     strike_level = s;
+        // }
 
-        double y_coordinate = 0;
-        if (data.value.features.y_coordinate.properties.value is double y)
-        {
-            y_coordinate = y;
-        }
-
-        string type = "";
-        if (data.value.features.type.properties.value is string t)
-        {
-            type = t;
-        }
-
-        int strike_level = 0;
-        if (data.value.features.strike_level.properties.value is int s)
-        {
-            strike_level = s;
-        }
+        string type = data.feature.type;
+        int strike_level = data.feature.strike_level;
+        float x_coordinate = data.feature.x_coordinate;
+        float y_coordinate = data.feature.y_coordinate;
 
         print("x_coordinate: " + x_coordinate + " y_coordinate: " + y_coordinate + " type: " + type +
               " strike_level: " + strike_level);
 
-        int StrikeLevel = strike_level;
 
         Vector3 SpawnPosion = new Vector3(Random.Range(-SpawnRange, SpawnRange), SpwanHeight,
             Random.Range(-SpawnRange, SpawnRange));
         Quaternion SpwanRotation = Quaternion.AngleAxis(-80, Vector3.right); //四元数绕x轴旋转-80度
 
-        Vector3 TargetPosition = new Vector3((float)x_coordinate, 0, (float)y_coordinate);
+        Vector3 TargetPosition = new Vector3(x_coordinate, 0, y_coordinate);
 
         //根据type生成对应类型的炸弹
         GameObject BombObject = null;
@@ -181,7 +180,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
 
         if (BombObject != null)
         {
-            SpawnBomb(BombObject, SpawnPosion, SpwanRotation, TargetPosition, StrikeLevel);
+            SpawnBomb(BombObject, SpawnPosion, SpwanRotation, TargetPosition, strike_level);
         }
     }
 }

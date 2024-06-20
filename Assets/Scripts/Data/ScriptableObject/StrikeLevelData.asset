@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989a5028274f4d088fef26eb480d67ab, type: 3}
   m_Name: StrikeLevelData
   m_EditorClassIdentifier: 
-  Range: []
+  Range:
+  - 100
+  - 200
+  - 500
+  - 1000

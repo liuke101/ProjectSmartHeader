@@ -1300,6 +1300,7 @@ GameObject:
   - component: {fileID: 489098003}
   - component: {fileID: 489098004}
   - component: {fileID: 489098007}
+  - component: {fileID: 489098008}
   m_Layer: 0
   m_Name: --GlobalScripts--
   m_TagString: GameController
@@ -1482,6 +1483,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede93b619557417a89bb4490c27e9bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnKafkaMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 489098003}
+        m_TargetAssemblyTypeName: SpawnBombController, Assembly-CSharp
+        m_MethodName: SpawnBombTest
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &489098008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489097999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20cfa3667887764b90f7aa3fc0ddd3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kafkaStarted: 0
   OnKafkaMessageReceived:
     m_PersistentCalls:
       m_Calls:
