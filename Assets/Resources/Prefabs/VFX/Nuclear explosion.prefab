@@ -49284,7 +49284,7 @@ MonoBehaviour:
   frequency: 30
   duration: 3
   timeRemaining: 0
-  explosionFinalRadious: 850
+  explosionFinalRadious: 2000
   explosionCurrentRadious: 0
   sizeCurve:
     serializedVersion: 2

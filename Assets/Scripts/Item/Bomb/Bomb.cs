@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using INab.WorldScanFX;
-using INab.WorldScanFX.URP;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public enum EBombType 
 {
@@ -13,30 +10,31 @@ public enum EBombType
     核弹,
 }
 
-public enum EBombLevel
+public struct ExplosionData
 {
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
+    public EBombType BombType;
+    public int StrikeLevel;
+    public double X_Coordinate;
+    public double Y_Coordinate;
 }
+        
 
 public class Bomb : MonoBehaviour
 {
-    [FormerlySerializedAs("BombType")] [Header("炸弹参数")]
+    [Header("炸弹参数")]
     public EBombType EBombType; //炸弹类型
     public float LifeTime = 10.0f; //生命周期，防止未发生碰撞炸弹一直存在
     public ParticleSystem ExplosionParticle; //爆炸粒子
     public AudioClip ExplosionAudio; //爆炸音效
     
-    [Header("抛物线")]
     [HideInInspector]
-    public Transform TargetPointTransform;  // 目标点Transform
+    public Vector3 TargetPosition;  // 目标点Transform
     public float speed = 10; // 运动速度
     public float MinDistance = 0.5f; // 最小接近距离, 以停止运动
     private float DistanceToTarget;
     private bool bCanMove = true;
-
+    
+    
     private void Awake()
     {
         gameObject.layer = LayerMask.NameToLayer("Bomb"); //设置炸弹层
@@ -50,7 +48,7 @@ public class Bomb : MonoBehaviour
         Destroy(gameObject, LifeTime);  //生命周期结束后销毁
         
         //抛物线发射
-        DistanceToTarget = Vector3.Distance(transform.position, TargetPointTransform.position);
+        DistanceToTarget = Vector3.Distance(transform.position, TargetPosition);
         StartCoroutine(Launch());
     }
     
@@ -96,7 +94,7 @@ public class Bomb : MonoBehaviour
     {
         while (bCanMove)
         {
-            Vector3 targetPos = TargetPointTransform.position;
+            Vector3 targetPos = TargetPosition;
             // 朝向目标, 以计算运动
             transform.LookAt(targetPos);
             // 根据距离衰减 角度
@@ -104,7 +102,7 @@ public class Bomb : MonoBehaviour
             // 旋转对应的角度（线性插值一定角度，然后每帧绕X轴旋转）
             transform.rotation *= Quaternion.Euler(Mathf.Clamp(-angle, -42, 42), 0, 0);
             // 当前距离目标点
-            float currentDist = Vector3.Distance(transform.position, TargetPointTransform.position);
+            float currentDist = Vector3.Distance(transform.position, TargetPosition);
             // 很接近目标了, 准备结束循环
             if (currentDist < MinDistance)
             {
@@ -118,11 +116,13 @@ public class Bomb : MonoBehaviour
         if (bCanMove == false)
         {
             // 使自己的位置, 跟[目标点]重合
-            transform.position = TargetPointTransform.position;
+            transform.position = TargetPosition;
             // [停止]当前协程任务,参数是协程方法名
             StopCoroutine(Launch());
             // 销毁脚本
             Destroy(this);
         }
     }
+
+    
 }

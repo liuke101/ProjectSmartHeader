@@ -102,7 +102,7 @@ MonoBehaviour:
   ExplosionParticle: {fileID: 0}
   ExplosionAudio: {fileID: 0}
   TargetPointTransform: {fileID: 0}
-  speed: 100
+  speed: 300
   MinDistance: 0.5
 --- !u!1 &8210791021160871236
 GameObject:
