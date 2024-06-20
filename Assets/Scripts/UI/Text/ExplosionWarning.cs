@@ -18,7 +18,7 @@ public class ExplosionWarning : MonoBehaviour
             string line1 = "检测到爆源！\n";
             string line2 = "类型：" + explosionData.BombType + "\n";
             string line3 = "打击等级：" + explosionData.StrikeLevel + "\n";
-            string line4 = $"坐标：({explosionData.X_Coordinate},{explosionData.Y_Coordinate})";
+            string line4 = $"坐标：({explosionData.X_Coordinate:F3},{explosionData.Y_Coordinate:F3})"; //保留三位小数
             
             _textMeshPro.text = line1 + line2 + line3 + line4;
         }

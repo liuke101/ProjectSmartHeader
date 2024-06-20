@@ -99,7 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EBombType: 0
   LifeTime: 10
-  ExplosionParticle: {fileID: 0}
+  ExplosionParticle: {fileID: 1835311064162197329, guid: a59fb9c46e979b2448365841fbf2c24f,
+    type: 3}
   ExplosionAudio: {fileID: 0}
   TargetPosition: {x: 0, y: 0, z: 0}
   speed: 1000

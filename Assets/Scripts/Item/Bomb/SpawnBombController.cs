@@ -26,7 +26,6 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
 
     private void Start()
     {
-        SpawnBomb();
     }
 
     
@@ -45,10 +44,6 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
          Quaternion SpwanRotation = Quaternion.AngleAxis(-80, Vector3.right);  //四元数绕x轴旋转-80度
          
          Vector3 TargetPosition = new Vector3(Random.Range(-TargetRange, TargetRange), 0, Random.Range(-TargetRange, TargetRange));
-         
-         // TODO:在Bomb类中用委托进行销毁，跟随炸弹销毁
-         // Destroy(SpawnPoint);
-         // Destroy(TargetPoint);
          
          //根据type生成对应类型的炸弹
          GameObject BombObject = null;
@@ -122,6 +117,12 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
 
     public void SpawnBombTest(ExplosiveSourceData data)
     {
+        if(BombObjects.Count == 0)
+        {
+            Debug.LogError("BombObjects 为空");
+            return;
+        }
+        
         //读取数据，并转换到对应的类型(必须这样转换，不能直接强转！）
         double x_coordinate = 0;
         if (data.value.features.x_coordinate.properties.value is double x)
