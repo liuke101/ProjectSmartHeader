@@ -7,9 +7,11 @@ using Random = UnityEngine.Random;
 
 public class SpawnBombController : MonoSingleton<SpawnBombController>
 {
+    [Header("主变量")]
     public List<GameObject> BombObjects;
     public ScanFX ScanFX;
-
+    public StrikeLevelData StrikeLevelData;
+    
     [Header("测试生成参数")]
     public float SpawnRange = 1000.0f;
     public float SpwanHeight= 1000.0f;
@@ -100,16 +102,16 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
              switch (StrikeLevel)
              {
                  case 1:
-                     ScanFX.MaskRadius = 50.0f;
+                     ScanFX.SetScanRange(StrikeLevelData.Range[0]);
                      break;
                  case 2:
-                     ScanFX.MaskRadius = 100.0f;
+                     ScanFX.SetScanRange(StrikeLevelData.Range[1]);
                      break;
                  case 3:
-                     ScanFX.MaskRadius = 200.0f;
+                     ScanFX.SetScanRange(StrikeLevelData.Range[2]);
                      break;
                  case 4:
-                     ScanFX.MaskRadius = 500.0f;
+                     ScanFX.SetScanRange(StrikeLevelData.Range[3]);
                      break;
              }
          }

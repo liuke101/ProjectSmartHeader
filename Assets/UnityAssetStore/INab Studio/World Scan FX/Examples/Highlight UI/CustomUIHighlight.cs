@@ -110,7 +110,7 @@ namespace INab.WorldScanFX
                 // Calculate distance between player and UI
                 float distance = Vector3.Distance(ExplosionPosition, transform.position);
                 // Convert distance to text and display on UI
-                string distanceText = Mathf.CeilToInt(distance) + "M";
+                string distanceText = "距爆源" + Mathf.CeilToInt(distance) + "M";
                 uiText.text = distanceText;
 
                 // Calculate new position for UI based on player's camera

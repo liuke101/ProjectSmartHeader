@@ -126,12 +126,6 @@ namespace INab.WorldScanFX
         [Tooltip("Radius of the scan area.")]
         [SerializeField] private float _MaskRadius = 50f;
         
-        public float MaskRadius
-        {
-            get { return _MaskRadius; }
-            set { _MaskRadius = value; }
-        }
-
         [Tooltip("Defines the edge sharpness of the sphere mask.")]
         [SerializeField][Range(0f, 1f)] private float _MaskHardness = 0.5f;
 
@@ -653,6 +647,20 @@ namespace INab.WorldScanFX
 
             material.SetFloat("_EdgeDetectionMultiplier", _EdgeDetectionMultiplier);
             material.SetFloat("_GridMultiplier", _GridMultiplier);
+        }
+        #endregion
+        
+        
+        #region CustomMethods
+
+        public void SetScanRange(float MaskRadius)
+        {
+            if (scanMaterial != null)
+            {
+                _MaskRadius = MaskRadius;
+                scanMaterial.SetFloat("_MaskRadius", _MaskRadius);
+                UpdateAllMaterialsKeywords();
+            }
         }
         #endregion
     }
