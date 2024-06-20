@@ -93,26 +93,26 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         });
         
         
-        //根据等级设置扫描范围
-        //BUG:无效
-        // if (ScanFX)
-        // {
-        //     switch (level)
-        //     {
-        //         case EBombLevel.ONE:
-        //             ScanFX.MaskRadius = 50.0f;
-        //             break;
-        //         case EBombLevel.TWO:
-        //             ScanFX.MaskRadius = 100.0f;
-        //             break;
-        //         case EBombLevel.THREE:
-        //             ScanFX.MaskRadius = 200.0f;
-        //             break;
-        //         case EBombLevel.FOUR:
-        //             ScanFX.MaskRadius = 500.0f;
-        //             break;
-        //     }
-        // }
+        // 根据等级设置扫描范围
+        // BUG:无效
+         if (ScanFX)
+         {
+             switch (StrikeLevel)
+             {
+                 case 1:
+                     ScanFX.MaskRadius = 50.0f;
+                     break;
+                 case 2:
+                     ScanFX.MaskRadius = 100.0f;
+                     break;
+                 case 3:
+                     ScanFX.MaskRadius = 200.0f;
+                     break;
+                 case 4:
+                     ScanFX.MaskRadius = 500.0f;
+                     break;
+             }
+         }
     }
 
     public void SpawnBombTest(ExplosiveSourceData data)

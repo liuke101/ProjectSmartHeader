@@ -10,8 +10,8 @@ public class KafkaListener : MonoSingleton<KafkaListener>
     
     private void Start()
     {
-        ExplosiveSourceData data = JsonDataManager.Instance.LoadData<ExplosiveSourceData>("TestData", JsonType.LitJson);
-        OnKafkaMessageReceived?.Invoke(data);    
+        //ExplosiveSourceData data = JsonDataManager.Instance.LoadData<ExplosiveSourceData>("TestData", JsonType.LitJson);
+        //OnKafkaMessageReceived?.Invoke(data);    
     }
     
 }

@@ -25,7 +25,6 @@ public class Bomb : MonoBehaviour
     public EBombType EBombType; //炸弹类型
     public float LifeTime = 10.0f; //生命周期，防止未发生碰撞炸弹一直存在
     public ParticleSystem ExplosionParticle; //爆炸粒子
-    public AudioClip ExplosionAudio; //爆炸音效
     
     [HideInInspector]
     public Vector3 TargetPosition;  // 目标点Transform
@@ -64,12 +63,6 @@ public class Bomb : MonoBehaviour
         {
             ParticleSystem Explosion = Instantiate(ExplosionParticle, transform.position, Quaternion.identity); 
             Destroy(Explosion.gameObject, 30.0f); //销毁时间待定
-        }
-        
-        //爆炸音效
-        if (ExplosionAudio)
-        {
-            GetComponent<AudioSource>().PlayOneShot(ExplosionAudio); 
         }
         
         //扫描线
