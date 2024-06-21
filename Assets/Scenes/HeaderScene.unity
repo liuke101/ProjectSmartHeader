@@ -374,37 +374,37 @@ PrefabInstance:
     - target: {fileID: 458539505735076531, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.974228
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 458539505735076531, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1622.0577
+      value: 1914.48
       objectReference: {fileID: 0}
     - target: {fileID: 458539505735076531, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -714.7263
+      value: -13.304312
       objectReference: {fileID: 0}
     - target: {fileID: 458539505735076531, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.81734854
+      value: 0.70775276
       objectReference: {fileID: 0}
     - target: {fileID: 458539505735076531, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.57614005
+      value: 0.70646024
       objectReference: {fileID: 0}
     - target: {fileID: 458539505735076531, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0016347019
+      value: -4.1066175e-10
       objectReference: {fileID: 0}
     - target: {fileID: 458539505735076531, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0011528507
+      value: 2.7293998e-10
       objectReference: {fileID: 0}
     - target: {fileID: 458539505735076531, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
@@ -429,12 +429,62 @@ PrefabInstance:
     - target: {fileID: 969879053497650306, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 969879053497650306, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048970785528977303, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048970785528977303, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: far clip plane
+      value: 1999.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048970785528977303, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694796184585577195, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694796184585577195, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694796184585577195, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694796184585577195, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694796184585577195, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694796184585577195, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694796184585577195, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7104774097567502187, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
@@ -1299,7 +1349,6 @@ GameObject:
   - component: {fileID: 489098006}
   - component: {fileID: 489098003}
   - component: {fileID: 489098004}
-  - component: {fileID: 489098008}
   m_Layer: 0
   m_Name: --GlobalScripts--
   m_TagString: GameController
@@ -1461,34 +1510,6 @@ MonoBehaviour:
       - m_Target: {fileID: 53909258}
         m_TargetAssemblyTypeName: INab.WorldScanFX.CustomUIHighlight, Assembly-CSharp
         m_MethodName: UpdatePlayerCamera
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &489098008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489097999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f20cfa3667887764b90f7aa3fc0ddd3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  kafkaStarted: 0
-  OnKafkaMessageReceived:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 489098003}
-        m_TargetAssemblyTypeName: SpawnBombController, Assembly-CSharp
-        m_MethodName: SpawnBombTest
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3060,6 +3081,67 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1086505398}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1710126110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1710126113}
+  - component: {fileID: 1710126115}
+  m_Layer: 0
+  m_Name: --WebSocket--
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1710126113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710126110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1710126115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710126110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7d2fad64614022a6fd609ea7d7ba1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URL: ws://ditto:ditto@10.151.1.109:8080/ws/2
+  SubscribeMessage: START-SEND-EVENTS?filter=eq(thingId,"edu.whut.cs.iot.se:explosion")
+  OnExplosiveSourceMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 489098003}
+        m_TargetAssemblyTypeName: SpawnBombController, Assembly-CSharp
+        m_MethodName: SpawnBombTest
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1793503838 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7372566707306114220, guid: 195d30d13d5f6ed4c8844b6e59595b26,
@@ -3530,3 +3612,4 @@ SceneRoots:
   - {fileID: 1964220901}
   - {fileID: 80739772}
   - {fileID: 2027000014}
+  - {fileID: 1710126113}

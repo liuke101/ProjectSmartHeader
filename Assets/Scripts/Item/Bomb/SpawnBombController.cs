@@ -145,15 +145,14 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         //     strike_level = s;
         // }
 
-        string type = data.feature.type;
-        int strike_level = data.feature.strike_level;
-        float x_coordinate = data.feature.x_coordinate;
-        float y_coordinate = data.feature.y_coordinate;
+        string type = data.type;
+        int strike_level = (int)data.strike_level;
+        float x_coordinate = data.x_coordinate;
+        float y_coordinate = data.y_coordinate;
 
         print("x_coordinate: " + x_coordinate + " y_coordinate: " + y_coordinate + " type: " + type +
               " strike_level: " + strike_level);
-
-
+        
         Vector3 SpawnPosion = new Vector3(Random.Range(-SpawnRange, SpawnRange), SpwanHeight,
             Random.Range(-SpawnRange, SpawnRange));
         Quaternion SpwanRotation = Quaternion.AngleAxis(-80, Vector3.right); //四元数绕x轴旋转-80度
