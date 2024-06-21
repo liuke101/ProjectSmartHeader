@@ -1,5 +1,6 @@
 using Confluent.Kafka;
 using System;
+using System.Collections;
 using System.Threading;
 using UnityEngine;
 using System.Collections.Concurrent;
@@ -10,89 +11,42 @@ using UnityEngine.Events;
 
 class KafkaConsumer : MonoSingleton<KafkaConsumer>
 {
+    [Header("协程")]
+    Coroutine kafkaCoroutine;
 
-    [Serializable]
-    public class threadHandle
-    {
-        // IConsumer<Ignore, string> c;
-        ConsumerConfig config;
-
-        public readonly ConcurrentQueue<string> _queue = new ConcurrentQueue<string>();
-        public void StartKafkaListener()
-        {
-            Debug.Log("Kafka - Starting Thread..");
-            try
-            {
-                config = new ConsumerConfig
-                {
-                    // GroupId = "c#test-consumer-group" + DateTime.Now,  // unique group, so each listener gets all messages
-                    // BootstrapServers = "localhost:9092",
-                    // AutoOffsetReset = AutoOffsetReset.Earliest
-                    GroupId = "group5", // 你的消费者组ID
-                    BootstrapServers = "10.151.1.109:9092", // 你的Kafka集群地址
-                    AutoOffsetReset = AutoOffsetReset.Earliest // 自动偏移量重置策略
-                };
-
-                Debug.Log("Kafka - Created config");
-
-                using var c = new ConsumerBuilder<Ignore, byte[]>(config).Build();
-                c.Subscribe("notify_feature"); // 订阅你的Kafka主题
-                Debug.Log("Kafka - Subscribed");
-
-                CancellationTokenSource cts = new CancellationTokenSource();
-                Console.CancelKeyPress += (_, e) => {
-                    e.Cancel = true; // prevent the process from terminating.
-                    cts.Cancel();
-                };
-
-                try
-                {
-                    while (true)
-                    {
-                        try
-                        {
-                            // Waiting for message
-                            var cr = c.Consume(cts.Token);
-                            // Got message! Decode and put on queue
-                            string message = Encoding.UTF8.GetString(cr.Message.Value);
-                            _queue.Enqueue(message);
-                        }
-                        catch (ConsumeException e)
-                        {
-                            Debug.Log("Kafka - Error occured: " + e.Error.Reason);
-                        }
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    Debug.Log("Kafka - Canceled..");
-                    // Ensure the consumer leaves the group cleanly and final offsets are committed.
-                    c.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.Log("Kafka - Received Expection: " + ex.Message + " trace: " + ex.StackTrace);
-            }
-        }
-    }
+    private IConsumer<Ignore, byte[]> Consumer;
+    
+    ConsumerConfig config;
+    public readonly ConcurrentQueue<string> _queue = new ConcurrentQueue<string>();
     public bool kafkaStarted = false;
-    Thread kafkaThread;
-    threadHandle _handle;
     
     //接收到爆源数据时进行广播
     public UnityEvent<ExplosiveSourceData> OnKafkaMessageReceived;
 
     void Start()
     {
-        StartKafkaThread();
+        config = new ConsumerConfig
+        {
+            GroupId = "group5", // 你的消费者组ID
+            BootstrapServers = "10.151.1.109:9092", // 你的Kafka集群地址
+            AutoOffsetReset = AutoOffsetReset.Earliest // 自动偏移量重置策略
+        };
+        Debug.Log("Kafka - 创建config");
+        
+        Consumer = new ConsumerBuilder<Ignore, byte[]>(config).Build();
+        Consumer.Subscribe("notify_feature"); // 订阅你的Kafka主题
+        
+        Debug.Log("Kafka - 订阅");
+        
+        StartKafkaCoroutine();
     }
+    
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.LeftControl) && Input.GetKeyUp(KeyCode.C))
         {
             Debug.Log("Cancelling Kafka!");
-            StopKafkaThread();
+            StopKafkaCoroutine();
         }
 
         ProcessKafkaMessage();
@@ -100,36 +54,39 @@ class KafkaConsumer : MonoSingleton<KafkaConsumer>
 
     void OnDisable()
     {
-        StopKafkaThread();
+        StopKafkaCoroutine();
     }
-    
     void OnApplicationQuit()
     {
-        StopKafkaThread();
+        StopKafkaCoroutine();
     }
-
     private void OnDestroy()
     {
-        StopKafkaThread();
+        StopKafkaCoroutine();
     }
 
-    public void StartKafkaThread()
+    public void StartKafkaCoroutine()
     {
         if (kafkaStarted) return;
-
-        _handle = new threadHandle();
-        kafkaThread = new Thread(_handle.StartKafkaListener);
-
-        kafkaThread.Start();
+        kafkaCoroutine = StartCoroutine(KafkaCoroutine());
         kafkaStarted = true;
-        // StartKafkaListener(config);
     }
+    
+    public void StopKafkaCoroutine()
+    {
+        if (kafkaStarted)
+        {
+            StopCoroutine(kafkaCoroutine);
+            kafkaStarted = false;
+        }
+    }
+    
     private void ProcessKafkaMessage()
     {
         if (kafkaStarted)
         {
             string message;
-            while (_handle._queue.TryDequeue(out message))
+            while (_queue.TryDequeue(out message))
             {
                 //判断message是否包含"explosion"
                 if (message.Contains("explosion"))
@@ -146,14 +103,44 @@ class KafkaConsumer : MonoSingleton<KafkaConsumer>
             }
         }
     }
+    
 
-    void StopKafkaThread()
+    IEnumerator KafkaCoroutine()
     {
-        if (kafkaStarted)
+        while (true)
         {
-            kafkaThread.Abort();
-            kafkaThread.Join();
-            kafkaStarted = false;
+            Debug.Log("Kafka - 开始协程");
+            
+            // config = new ConsumerConfig
+            // {
+            //     GroupId = "group5", // 你的消费者组ID
+            //     BootstrapServers = "10.151.1.109:9092", // 你的Kafka集群地址
+            //     AutoOffsetReset = AutoOffsetReset.Earliest // 自动偏移量重置策略
+            // };
+            //
+            // Debug.Log("Kafka - 创建config");
+
+            // using var c = new ConsumerBuilder<Ignore, byte[]>(config).Build();
+            // c.Subscribe("notify_feature"); // 订阅你的Kafka主题
+            // Debug.Log("Kafka - Subscribed");
+
+            CancellationTokenSource cts = new CancellationTokenSource();
+            Console.CancelKeyPress += (_, e) =>
+            {
+                e.Cancel = true; // prevent the process from terminating.
+                cts.Cancel();
+            };
+
+            while (true)
+            {
+                // Waiting for message
+                var cr = Consumer.Consume(cts.Token);
+                // Got message! Decode and put on queue
+                string message = Encoding.UTF8.GetString(cr.Message.Value);
+                _queue.Enqueue(message);
+                
+                yield return null; //等待下一帧
+            }
         }
     }
 }
