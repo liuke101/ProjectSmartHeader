@@ -36,13 +36,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Highlight
+  m_Name: M_HeaderHighlight
   m_Shader: {fileID: -6465566751694194690, guid: eef24bb8b64174d409c7a4336995cf2a,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ALPHATEST_ON
   - _USESCANOVERLAY
   m_InvalidKeywords:
   - _OVERLAY_EDGEDETECTION
@@ -51,9 +50,9 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: 2000
   stringTagMap:
-    RenderType: TransparentCutout
+    RenderType: Opaque
   disabledShaderPasses:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
@@ -64,11 +63,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: d9c0dd5cdac07b145be73329e489869a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 328c0e29556ebbc43ab323efe9ac8428, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9fc5e27c4d0ec654d830c13b0110a615, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -96,7 +95,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1d9796818dc560743af2ea728e4d2c0d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -122,11 +121,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
-    - _AlphaClip: 1
+    - _AlphaClip: 0
     - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 0
     - _AlphaSrcBlend: 1
-    - _AlphaToMask: 1
+    - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _BUILTIN_AlphaClip: 1
     - _BUILTIN_Blend: 0
@@ -178,7 +177,7 @@ Material:
     - _MaskPower: 1
     - _MaskRadius: 1000
     - _Metallic: 0
-    - _OcclusionStrength: 0
+    - _OcclusionStrength: 1
     - _OpaqueCullMode: 2
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -235,7 +234,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Forward: {r: 0, g: 0, b: 1, a: 0}
     - _Origin: {r: 0.001, g: 0.001, b: 0.001, a: 0}
-    - _Rim_Color: {r: 0, g: 5.1289263, b: 21.148417, a: 0}
+    - _Rim_Color: {r: 0, g: 8.158203, b: 14.259478, a: 0.003921569}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
