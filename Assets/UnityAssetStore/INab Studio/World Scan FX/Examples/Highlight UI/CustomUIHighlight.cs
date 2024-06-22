@@ -1,4 +1,5 @@
 using System.Collections;
+using JsonStruct;
 using TMPro;
 using UnityEngine;
 
@@ -135,9 +136,9 @@ namespace INab.WorldScanFX
             }
         }
         
-        public void UpdateExplosionPosition(ExplosionData Data)
+        public void UpdateExplosionPosition(ExplosiveSourceData Data)
         {
-            ExplosionPosition = new Vector3((float)Data.X_Coordinate, 0,(float)Data.Y_Coordinate);
+            ExplosionPosition = new Vector3((float)Data.x_coordinate, 0,(float)Data.y_coordinate);
         }
         
         public void UpdatePlayerCamera(GameObject NewCamera)

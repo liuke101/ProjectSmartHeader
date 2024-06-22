@@ -18,18 +18,6 @@ namespace JsonStruct
     }
     
     
-    // 爆源定位Json
-    // {
-    //     ThingID：edu.whut.cs.iot.se:explosion
-    //         Feature：{
-    //         type: 温压弹/堵口爆/核爆,
-    //         strike_level: 一级/二级/三级/四级,	
-    //         x_coordinate: 15.1,
-    //         y_coordinate: 35.1
-    //     }
-    // }
-    
-    
     /* Json数据结构 */
     // public class ExplosiveSourceData
     // {

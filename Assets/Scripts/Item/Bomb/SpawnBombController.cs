@@ -18,7 +18,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
     public float TargetRange= 500.0f;
     
     [Header("委托/事件")]
-    public UnityEvent<ExplosionData> ExplosionDataEvent; //用于向UI发送爆源数据的事件
+    public UnityEvent<ExplosiveSourceData> ExplosionDataEvent; //用于向UI发送爆源数据的事件
 
     protected override void Awake()
     {
@@ -63,56 +63,23 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
          if (BombObject != null)
          {
              SpawnBomb(BombObject, SpawnPosion, SpwanRotation, TargetPosition, StrikeLevel);
-         }
-    }
-    
-    /// <summary>
-    /// 生成炮弹
-    /// </summary>
-    /// <param name="BombObject"></param>
-    /// <param name="SpawnPosion"></param>
-    /// <param name="SpwanRotation">控制炮弹发射角度</param>
-    /// <param name="TargetPosition"></param>
-    /// <param name="StrikeLevel"></param>
-    public virtual void SpawnBomb(GameObject BombObject, Vector3 SpawnPosion, Quaternion SpwanRotation, Vector3 TargetPosition, int StrikeLevel)
-    {
-        //生成炸弹
-        Bomb bomb = Instantiate(BombObject.GetComponentInChildren<Bomb>(), SpawnPosion, SpwanRotation);
-        bomb.TargetPosition =  TargetPosition;
-        
-        //广播
-        ExplosionDataEvent?.Invoke(new ExplosionData()
-        {
-            BombType = bomb.EBombType,
-            StrikeLevel = StrikeLevel,
-            X_Coordinate = TargetPosition.x,
-            Y_Coordinate = TargetPosition.z
-        });
-        
-        
-        // 根据等级设置扫描范围
-        // BUG:无效
-         if (ScanFX && StrikeLevelData.Range.Count >= 4)
-         {
-             switch (StrikeLevel)
+             
+             
+             //广播
+             ExplosiveSourceData data = new ExplosiveSourceData()
              {
-                 case 1:
-                     ScanFX.SetScanRange(StrikeLevelData.Range[0]);
-                     break;
-                 case 2:
-                     ScanFX.SetScanRange(StrikeLevelData.Range[1]);
-                     break;
-                 case 3:
-                     ScanFX.SetScanRange(StrikeLevelData.Range[2]);
-                     break;
-                 case 4:
-                     ScanFX.SetScanRange(StrikeLevelData.Range[3]);
-                     break;
-             }
+                 type = BombObject.GetComponentInChildren<Bomb>().EBombType.ToString(),
+                 strike_level = StrikeLevel,
+                 x_coordinate = TargetPosition.x,
+                 y_coordinate = TargetPosition.z
+             };
+             
+             ExplosionDataEvent?.Invoke(data);
+             MessageBox.Instance.PrintExplosionData(data);
          }
     }
 
-    public void SpawnBombTest(ExplosiveSourceData data)
+    public void SpawnBombByWebSocket(ExplosiveSourceData data)
     {
         if(BombObjects.Count == 0)
         {
@@ -120,39 +87,11 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
             return;
         }
         
-        //读取数据，并转换到对应的类型(必须这样转换，不能直接强转！）
-        // double x_coordinate = 0;
-        // if (data.value.features.x_coordinate.properties.value is double x)
-        // {
-        //     x_coordinate = x;
-        // }
-        //
-        // double y_coordinate = 0;
-        // if (data.value.features.y_coordinate.properties.value is double y)
-        // {
-        //     y_coordinate = y;
-        // }
-        //
-        // string type = "";
-        // if (data.value.features.type.properties.value is string t)
-        // {
-        //     type = t;
-        // }
-        //
-        // int strike_level = 0;
-        // if (data.value.features.strike_level.properties.value is int s)
-        // {
-        //     strike_level = s;
-        // }
-
         string type = data.type;
         int strike_level = (int)data.strike_level;
         float x_coordinate = data.x_coordinate;
         float y_coordinate = data.y_coordinate;
 
-        print("x_coordinate: " + x_coordinate + " y_coordinate: " + y_coordinate + " type: " + type +
-              " strike_level: " + strike_level);
-        
         Vector3 SpawnPosion = new Vector3(Random.Range(-SpawnRange, SpawnRange), SpwanHeight,
             Random.Range(-SpawnRange, SpawnRange));
         Quaternion SpwanRotation = Quaternion.AngleAxis(-80, Vector3.right); //四元数绕x轴旋转-80度
@@ -180,6 +119,42 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         if (BombObject != null)
         {
             SpawnBomb(BombObject, SpawnPosion, SpwanRotation, TargetPosition, strike_level);
+        }
+    }
+    
+    
+    /// <summary>
+    /// 生成炮弹
+    /// </summary>
+    /// <param name="BombObject"></param>
+    /// <param name="SpawnPosion"></param>
+    /// <param name="SpwanRotation">控制炮弹发射角度</param>
+    /// <param name="TargetPosition"></param>
+    /// <param name="StrikeLevel"></param>
+    public virtual void SpawnBomb(GameObject BombObject, Vector3 SpawnPosion, Quaternion SpwanRotation, Vector3 TargetPosition, int StrikeLevel)
+    {
+        //生成炸弹
+        Bomb bomb = Instantiate(BombObject.GetComponentInChildren<Bomb>(), SpawnPosion, SpwanRotation);
+        bomb.TargetPosition =  TargetPosition;
+        
+        // 根据等级设置扫描范围
+        if (ScanFX && StrikeLevelData.Range.Count >= 4)
+        {
+            switch (StrikeLevel)
+            {
+                case 1:
+                    ScanFX.SetScanRange(StrikeLevelData.Range[0]);
+                    break;
+                case 2:
+                    ScanFX.SetScanRange(StrikeLevelData.Range[1]);
+                    break;
+                case 3:
+                    ScanFX.SetScanRange(StrikeLevelData.Range[2]);
+                    break;
+                case 4:
+                    ScanFX.SetScanRange(StrikeLevelData.Range[3]);
+                    break;
+            }
         }
     }
 }

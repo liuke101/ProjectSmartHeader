@@ -10,15 +10,6 @@ public enum EBombType
     核弹,
 }
 
-public struct ExplosionData
-{
-    public EBombType BombType;
-    public int StrikeLevel;
-    public double X_Coordinate;
-    public double Y_Coordinate;
-}
-        
-
 public class Bomb : MonoBehaviour
 {
     [Header("炸弹参数")]

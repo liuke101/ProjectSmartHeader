@@ -13,13 +13,14 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     [Header("WebSocket")]
     public string URL = "ws://ditto:ditto@10.151.1.109:8080/ws/2";
     public string SubscribeMessage = "START-SEND-EVENTS?filter=eq(thingId,\"edu.whut.cs.iot.se:explosion\")";
+    public string SubscribeACK = "START-SEND-EVENTS:ACK";
     private WebSocket WebSocket;
     
     // 消费者队列
     private readonly ConcurrentQueue<string> CustomerQueue = new ConcurrentQueue<string>();
     
     // 连接协程
-    private Coroutine ConnectCoroutine;
+    private Coroutine SubscriptionCoroutine;
     
     [Header("事件")]
     // 接收到爆源数据时进行广播
@@ -34,7 +35,6 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
         {
             WebSocket.OnOpen += OnWebSocketOpen;
             WebSocket.OnMessage += OnMessageReceived; //当接收到消息时调用
-            //webSocket.OnBinary += OnBinaryMessageReceived;
             WebSocket.OnClosed += OnWebSocketClosed;
             WebSocket.Open();
         }
@@ -49,25 +49,34 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     {
         WebSocket.Close();
     }
+
+    //开关UI
+    public void SwitchState(bool isOpen)
+    {
+        if (isOpen)
+        {
+            WebSocket.Open();
+        }
+        else
+        {
+            WebSocket.Close();
+        }
+    }
     
     private void OnWebSocketOpen(WebSocket webSocket) 
     {
-        Debug.Log("WebSocket 开启成功");
-        
+        MessageBox.Instance.PrintMessage("WebSocket 开启成功");
         // 开启订阅协程
-        StartCoroutine(SubscriptionCoroutine());
+        SubscriptionCoroutine = StartCoroutine(Subscription());
     }
     
     private void OnMessageReceived(WebSocket webSocket, string message)
     {
         // 如果接收到ACK，停止协程
-        if(message.Contains("ACK")) //START-SEND-EVENTS:ACK
+        if(message == SubscribeACK) 
         {
-            if (webSocket.State == WebSocketStates.Connecting)
-            {
-                Debug.Log("WebSocket 连接成功");
-                StopCoroutine(SubscriptionCoroutine());
-            }
+            MessageBox.Instance.PrintMessage("WebSocket 订阅成功, 关闭协程");
+            StopCoroutine(SubscriptionCoroutine);
         }
         // 如果是json爆源数据
         else if(message.Contains("explosion")) 
@@ -77,28 +86,18 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
         }
     }
     
-    // private void OnBinaryMessageReceived(WebSocket webSocket, BufferSegment buffer)
-    // {
-    //     Debug.Log("Binary Message received from server. Length: " + buffer.Count);
-    //
-    //     using (var stream = System.IO.File.OpenWrite("path\to\file"))
-    //     {
-    //         stream.Write(buffer.Data, buffer.Offset, buffer.Count);
-    //     }
-    // }
-    
     private void OnWebSocketClosed(WebSocket webSocket, WebSocketStatusCodes code, string message)
     {
-        Debug.Log("WebSocket 正在关闭");
+        MessageBox.Instance.PrintMessage("WebSocket 正在关闭");
     
         if (code == WebSocketStatusCodes.NormalClosure)
         {
-            Debug.Log("WebSocket 关闭成功");
+            MessageBox.Instance.PrintMessage("WebSocket 关闭成功");
         }
         else 
         {
             // Error
-            Debug.LogError("WebSocket 因错误关闭" + code);
+            MessageBox.Instance.PrintMessage("WebSocket 发生了错误" + code);
         }
     }
     
@@ -106,13 +105,13 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     {
         while (CustomerQueue.TryDequeue(out var message))
         {
-             Debug.Log(message);
              ExplosiveSourceData data = JsonMapper.ToObject<ExplosiveSourceData>(message);
              
              //广播有效数据
              if(data != null)
              {
                  OnExplosiveSourceMessageReceived?.Invoke(data);
+                 MessageBox.Instance.PrintExplosionData(data);
              }
         }
     }
@@ -120,6 +119,8 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     //将json解析为项目所用格式
     private string JsonParser(string message)
     {
+        MessageBox.Instance.PrintMessage("解析Json数据");
+        
         // 解析 JSON 数据
         JsonData jsonData = JsonMapper.ToObject(message);
 
@@ -142,18 +143,18 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     }
     
     //Send发送订阅等待connecting
-    IEnumerator SubscriptionCoroutine()
+    IEnumerator Subscription()
     {
         while (true)
         {
             //如果未连接，持续发送订阅消息
-            if (WebSocket.IsOpen && WebSocket.State != WebSocketStates.Connecting)
+            if (WebSocket.IsOpen)
             {
                 WebSocket.Send(SubscribeMessage);
+                MessageBox.Instance.PrintMessage("发送 WebSocket 订阅消息");
             }
-
-            yield return null;
+            
+            yield return new WaitForSeconds(1.0f);
         }
     }
-    
 }
