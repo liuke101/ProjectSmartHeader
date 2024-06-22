@@ -13,7 +13,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
     public StrikeLevelData StrikeLevelData;
     
     [Header("测试生成参数")]
-    public float SpawnRange = 1000.0f;
+    public Vector2 SpawnRange = new Vector2(1000, 2000);
     public float SpwanHeight= 1000.0f;
     public float TargetRange= 500.0f;
     
@@ -37,7 +37,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         
         //暂时随机生成
          int StrikeLevel = Random.Range(1, 5);
-         Vector3 SpawnPosion = new Vector3(Random.Range(-SpawnRange, SpawnRange), SpwanHeight,Random.Range(-SpawnRange, SpawnRange));
+         Vector3 SpawnPosion = new Vector3(Random.Range(SpawnRange.x, SpawnRange.y), SpwanHeight,Random.Range(SpawnRange.x, SpawnRange.y));
          Quaternion SpwanRotation = Quaternion.AngleAxis(-80, Vector3.right);  //四元数绕x轴旋转-80度
          
          Vector3 TargetPosition = new Vector3(Random.Range(-TargetRange, TargetRange), 0, Random.Range(-TargetRange, TargetRange));
@@ -92,8 +92,8 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         float x_coordinate = data.x_coordinate;
         float y_coordinate = data.y_coordinate;
 
-        Vector3 SpawnPosion = new Vector3(Random.Range(-SpawnRange, SpawnRange), SpwanHeight,
-            Random.Range(-SpawnRange, SpawnRange));
+        Vector3 SpawnPosion = new Vector3(Random.Range(SpawnRange.x, SpawnRange.y), SpwanHeight,
+            Random.Range(SpawnRange.x, SpawnRange.y));
         Quaternion SpwanRotation = Quaternion.AngleAxis(-80, Vector3.right); //四元数绕x轴旋转-80度
 
         Vector3 TargetPosition = new Vector3(x_coordinate, 0, y_coordinate);
@@ -136,25 +136,12 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         //生成炸弹
         Bomb bomb = Instantiate(BombObject.GetComponentInChildren<Bomb>(), SpawnPosion, SpwanRotation);
         bomb.TargetPosition =  TargetPosition;
+        bomb.StrikeLevel = StrikeLevel;
         
         // 根据等级设置扫描范围
-        if (ScanFX && StrikeLevelData.Range.Count >= 4)
+        if (ScanFX && StrikeLevelData.ShockWaveRange.Count >= 4)
         {
-            switch (StrikeLevel)
-            {
-                case 1:
-                    ScanFX.SetScanRange(StrikeLevelData.Range[0]);
-                    break;
-                case 2:
-                    ScanFX.SetScanRange(StrikeLevelData.Range[1]);
-                    break;
-                case 3:
-                    ScanFX.SetScanRange(StrikeLevelData.Range[2]);
-                    break;
-                case 4:
-                    ScanFX.SetScanRange(StrikeLevelData.Range[3]);
-                    break;
-            }
+            ScanFX.SetScanRange(StrikeLevelData.ShockWaveRange[StrikeLevel-1]);
         }
     }
 }

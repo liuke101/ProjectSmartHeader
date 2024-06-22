@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989a5028274f4d088fef26eb480d67ab, type: 3}
   m_Name: StrikeLevelData
   m_EditorClassIdentifier: 
-  Range:
-  - 100
-  - 200
+  ShockWaveRange:
+  - 250
   - 500
   - 1000
+  - 2000
+  BombHoleDecalSize:
+  - 50
+  - 100
+  - 200
+  - 300

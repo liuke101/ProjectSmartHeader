@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -16,6 +18,8 @@ public class Bomb : MonoBehaviour
     public EBombType EBombType; //炸弹类型
     public float LifeTime = 10.0f; //生命周期，防止未发生碰撞炸弹一直存在
     public ParticleSystem ExplosionParticle; //爆炸粒子
+    public DecalProjector BombHoleDecal; //炸弹贴花
+    public StrikeLevelData StrikeLevelData;
     
     [HideInInspector]
     public Vector3 TargetPosition;  // 目标点Transform
@@ -23,6 +27,8 @@ public class Bomb : MonoBehaviour
     public float MinDistance = 0.5f; // 最小接近距离, 以停止运动
     private float DistanceToTarget;
     private bool bCanMove = true;
+    public int StrikeLevel;
+    
     
     
     private void Awake()
@@ -53,7 +59,7 @@ public class Bomb : MonoBehaviour
         if(ExplosionParticle)
         {
             ParticleSystem Explosion = Instantiate(ExplosionParticle, transform.position, Quaternion.identity); 
-            Destroy(Explosion.gameObject, 30.0f); //销毁时间待定
+            Destroy(Explosion.gameObject, 20.0f); //销毁时间待定
         }
         
         //扫描线
@@ -69,8 +75,23 @@ public class Bomb : MonoBehaviour
             }
         }
 
+        //爆炸弹坑Decal
+        if (BombHoleDecal)
+        {
+            DecalProjector decalProjector = Instantiate(BombHoleDecal, transform.position, Quaternion.Euler(90, 0, 0)); //生成炸弹贴花，绕X轴旋转90度，正对地面
+
+            //根据等级设置弹坑贴花大小
+            if (StrikeLevel>0 && StrikeLevelData.BombHoleDecalSize.Count >= 4)
+            {
+                float DecalSize = StrikeLevelData.BombHoleDecalSize[StrikeLevel-1];
+                decalProjector.size = new Vector3(DecalSize, DecalSize, DecalSize); 
+            }
+            
+            Destroy(decalProjector.gameObject, 60.0f);
+        }
+
         //销毁炮弹
-        Destroy(gameObject, 10.0f);
+        Destroy(gameObject, 1.0f);
     }
     
     
@@ -103,8 +124,6 @@ public class Bomb : MonoBehaviour
             transform.position = TargetPosition;
             // [停止]当前协程任务,参数是协程方法名
             StopCoroutine(Launch());
-            // 销毁脚本
-            Destroy(this);
         }
     }
 

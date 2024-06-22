@@ -580,7 +580,7 @@ PrefabInstance:
     - target: {fileID: 2048970785528977303, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
       propertyPath: far clip plane
-      value: 1999.06
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 2048970785528977303, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}
@@ -1091,7 +1091,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -1677,9 +1677,9 @@ MonoBehaviour:
   - {fileID: 3351293795593722149, guid: a5b5fa2ce9209834faa264dc02a4acff, type: 3}
   ScanFX: {fileID: 489098004}
   StrikeLevelData: {fileID: 11400000, guid: 119514884864dc64d9112a55e6820006, type: 2}
-  SpawnRange: 1000
+  SpawnRange: {x: 500, y: 1000}
   SpwanHeight: 1000
-  TargetRange: 100
+  TargetRange: 500
   ExplosionDataEvent:
     m_PersistentCalls:
       m_Calls:
@@ -3649,6 +3649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   URL: ws://ditto:ditto@10.151.1.109:8080/ws/2
   SubscribeMessage: START-SEND-EVENTS?filter=eq(thingId,"edu.whut.cs.iot.se:explosion")
+  SubscribeACK: START-SEND-EVENTS:ACK
   OnExplosiveSourceMessageReceived:
     m_PersistentCalls:
       m_Calls:
@@ -4395,6 +4396,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048970785528977303, guid: 6985a05e1e109804ea168cc2cb31c436,
+        type: 3}
+      propertyPath: far clip plane
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 7104774097567502187, guid: 6985a05e1e109804ea168cc2cb31c436,
         type: 3}

@@ -184,6 +184,10 @@ MonoBehaviour:
   LifeTime: 15
   ExplosionParticle: {fileID: 1835311064162197329, guid: 9bc307e300eb3324d9d5ef56daa8d25b,
     type: 3}
+  BombHoleDecal: {fileID: 9140232118436320508, guid: a9ee7977da74b1043b2a646916563e91,
+    type: 3}
+  StrikeLevelData: {fileID: 11400000, guid: 119514884864dc64d9112a55e6820006, type: 2}
   TargetPosition: {x: 0, y: 0, z: 0}
   speed: 300
   MinDistance: 0.5
+  StrikeLevel: 0
