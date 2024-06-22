@@ -52,16 +52,16 @@ Material:
     - _DepthPower: 5
     - _DepthThreshold: 3
     - _EdgeDetectionMultiplier: 1
-    - _EdgeHardness: 0.8
+    - _EdgeHardness: 0.702
     - _EdgeMultiplier: 1
-    - _EdgePower: 0.75
+    - _EdgePower: 5
     - _FovMask: 1
     - _FovMaskSmoothness: 1
-    - _Frequency: 3
+    - _Frequency: 1.21
     - _GridMultiplier: 1
     - _HighlightMultiplier: 0.8
     - _HighlightPower: 3
-    - _MaskHardness: 0.8
+    - _MaskHardness: 0.439
     - _MaskPower: 1
     - _MaskRadius: 1000
     - _NormalsHardness: 0.541
@@ -70,12 +70,12 @@ Material:
     - _OVERLAY: 3
     - _OriginOffset: 0
     - _OverlayMultiplier: 1
-    - _OverlayPower: 1
+    - _OverlayPower: 1.12
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Ratio: 0.63
+    - _Ratio: 0.5
     - _ScreenTextureTiling: 33.69
-    - _Size: 50
+    - _Size: 7.37
     - _SizeAdjust: 0
     - _Thickness: 5
     m_Colors:

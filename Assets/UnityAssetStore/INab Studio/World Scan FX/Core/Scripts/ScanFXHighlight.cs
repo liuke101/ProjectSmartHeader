@@ -17,17 +17,17 @@ namespace INab.WorldScanFX
         public AnimationCurve curve = AnimationCurve.EaseInOut(0, 1, 1, 0);
 
         [Tooltip("Events triggered when the highlight effect starts.")]
-        public UnityEvent highlightEvent;
+        [HideInInspector]public UnityEvent highlightEvent; //PS:现在通过代码调用，不再通过Inspector设置
 
         // Used internally for managing the highlight effect coroutine.
         private IEnumerator enumerator;
 
         // Used internally for applying changes to the renderer materials without affecting shared materials.
-        private MaterialPropertyBlock materialPropertyBlock;
+        protected MaterialPropertyBlock materialPropertyBlock;
 
-        private bool effectIsPlaying = false;
+        protected bool effectIsPlaying = false;
 
-        private bool alreadyScanned = false;
+        protected bool alreadyScanned = false;
         public bool AlreadyScanned
         {
             get
@@ -42,7 +42,7 @@ namespace INab.WorldScanFX
 
         #region PrivateMethods
 
-        private IEnumerator EffectEnumerator()
+        protected virtual IEnumerator EffectEnumerator()
         {
             float value;
             float elapsedTime = 0f;
@@ -65,7 +65,7 @@ namespace INab.WorldScanFX
             effectIsPlaying = false;
         }
 
-        private void UpdateHighlightValue(float value)
+        protected void UpdateHighlightValue(float value)
         {
             foreach (var item in renderers)
             {
@@ -79,7 +79,7 @@ namespace INab.WorldScanFX
             materialPropertyBlock = new MaterialPropertyBlock();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             effectIsPlaying = false;
             UpdateHighlightValue(0);

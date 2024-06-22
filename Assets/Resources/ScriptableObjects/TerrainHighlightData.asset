@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1020ec5a8385480ab5b2f196d37d4681, type: 3}
+  m_Name: TerrainHighlightData
+  m_EditorClassIdentifier: 
+  HighlightMaterial: {fileID: 2100000, guid: a5fa2af5885439248baca99743f3597e, type: 2}
+  OriginalMaterials:
+  - {fileID: 2100000, guid: 0a8c1c067ff0e914bb5dba89e5a81f77, type: 2}
+  - {fileID: 2100000, guid: 6054bcb48e07f6f49b87f561dc0dbcdb, type: 2}
+  HighlightUIComponent: {fileID: 2705640573742383506, guid: 3b2fd60539e9c064eb912ba14bc2b07c,
+    type: 3}

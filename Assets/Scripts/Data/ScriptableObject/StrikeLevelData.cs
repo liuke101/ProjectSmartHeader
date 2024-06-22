@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu (fileName = "StrikeLevelData", menuName = "ScriptableObject/StrikeLevelData", order = 0)]
+[CreateAssetMenu (fileName = "StrikeLevelData", menuName = "ScriptableObjects/StrikeLevelData", order = 0)]
 public class StrikeLevelData : ScriptableObject
 {
     //索引0~3代表0-4级

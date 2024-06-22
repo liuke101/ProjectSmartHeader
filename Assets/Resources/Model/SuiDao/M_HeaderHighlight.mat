@@ -161,7 +161,7 @@ Material:
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EdgeHardness: 0.8
+    - _EdgeHardness: 0.702
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
     - _EnvironmentReflections: 1
@@ -173,7 +173,7 @@ Material:
     - _GlossyReflections: 0
     - _HighlighValue: 1
     - _HighlightValue: 0.26
-    - _MaskHardness: 0.8
+    - _MaskHardness: 0.439
     - _MaskPower: 1
     - _MaskRadius: 1000
     - _Metallic: 0
@@ -190,7 +190,7 @@ Material:
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
     - _Rim_Power: 0.7
-    - _Size: 50
+    - _Size: 7.37
     - _SizeAdjust: 0
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0

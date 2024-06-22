@@ -24,7 +24,7 @@ namespace INab.WorldScanFX
         // 爆炸位置
         private Vector3 ExplosionPosition;
         // 当前激活的相机
-        public Camera ViewCamera;
+        private Camera ViewCamera;
 
         // Remaining time for the highlight effect
         private float timeLeft = 0;
@@ -35,17 +35,21 @@ namespace INab.WorldScanFX
         // Flag to indicate if the highlight effect is active
         private bool isEffectActive = false;
 
-        private void Awake()
+        protected virtual void Awake()
         {
            uiText = uiComponent.GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             // Deactivate the UI component initially
             uiComponent.SetActive(false);
             
-            //CameraManagerTest.Instance.SwitchCameraEvent.AddListener(UpdatePlayerCamera);
+            //绑定相机切换事件
+            CameraManager.Instance.SwitchCameraEvent.AddListener(UpdatePlayerCamera);
+            
+            //绑定高亮事件
+            GetComponent<ScanFXHighlight>().highlightEvent.AddListener(StartEffect);
         }
 
         // Method to start the highlight effect

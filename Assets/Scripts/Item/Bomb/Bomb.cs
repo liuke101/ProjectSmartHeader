@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -28,7 +27,7 @@ public class Bomb : MonoBehaviour
     private float DistanceToTarget;
     private bool bCanMove = true;
     public int StrikeLevel;
-    
+    private bool bHasBoom = false;  //已爆炸过
     
     
     private void Awake()
@@ -50,7 +49,12 @@ public class Bomb : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        Explosion(); //碰撞后爆炸
+        if (bHasBoom==false)
+        {
+            Explosion(); //碰撞后爆炸
+        }
+        
+        bHasBoom = true;
     }
     
     protected virtual void Explosion()
