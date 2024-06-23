@@ -233,7 +233,7 @@ Material:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Forward: {r: 0, g: 0, b: 1, a: 0}
-    - _Origin: {r: 0.001, g: 0.001, b: 0.001, a: 0}
+    - _Origin: {r: 0.001, g: 0, b: 0.001, a: 0}
     - _Rim_Color: {r: 0, g: 8.158203, b: 14.259478, a: 0.003921569}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}

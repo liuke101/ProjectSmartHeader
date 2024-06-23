@@ -21,8 +21,6 @@ namespace INab.WorldScanFX
         // Adjustment factor for scale based on distance
         public float scaleAdjustment = 10;
 
-        // 爆炸位置
-        private Vector3 ExplosionPosition;
         // 当前激活的相机
         private Camera ViewCamera;
 
@@ -113,36 +111,34 @@ namespace INab.WorldScanFX
             else
             {
                 // Calculate distance between player and UI
-                float distance = Vector3.Distance(ExplosionPosition, transform.position);
-                // Convert distance to text and display on UI
-                string distanceText = "距爆源" + Mathf.CeilToInt(distance) + "M";
-                uiText.text = distanceText;
-
-                // Calculate new position for UI based on player's camera
-                // check if position is behind camera
-                if (ViewCamera != null)
+                if (ViewCamera)
                 {
-                    bool isBehindCamera = ViewCamera.WorldToScreenPoint(transform.position).z < 0;
-                    var rect = uiComponent.GetComponent<RectTransform>();
+                    float distance = Vector3.Distance(ViewCamera.transform.position, transform.position);
+                    // Convert distance to text and display on UI
+                    string distanceText = "距观察点" + Mathf.CeilToInt(distance) + "M";
+                    uiText.text = distanceText;
 
-                    if (!isBehindCamera)
+                    // Calculate new position for UI based on player's camera
+                    // check if position is behind camera
+                    if (ViewCamera != null)
                     {
-                        var newPosition =
-                            ViewCamera.WorldToScreenPoint(transform.position + new Vector3(0, offsetY, 0));
-                        rect.position = newPosition;
-                    }
+                        bool isBehindCamera = ViewCamera.WorldToScreenPoint(transform.position).z < 0;
+                        var rect = uiComponent.GetComponent<RectTransform>();
 
-                    // Adjust scale of UI based on distance
-                    currentScale = Mathf.Clamp01(scaleAdjustment / distance);
-                    if (!isCurrentlyScaling)
-                        rect.localScale = new Vector3(currentScale, currentScale, currentScale);
+                        if (!isBehindCamera)
+                        {
+                            var newPosition =
+                                ViewCamera.WorldToScreenPoint(transform.position + new Vector3(0, offsetY, 0));
+                            rect.position = newPosition;
+                        }
+
+                        // Adjust scale of UI based on distance
+                        currentScale = Mathf.Clamp01(scaleAdjustment / distance);
+                        if (!isCurrentlyScaling)
+                            rect.localScale = new Vector3(currentScale, currentScale, currentScale);
+                    }
                 }
             }
-        }
-        
-        public void UpdateExplosionPosition(ExplosiveSourceData Data)
-        {
-            ExplosionPosition = new Vector3((float)Data.x_coordinate, 0,(float)Data.y_coordinate);
         }
         
         public void UpdatePlayerCamera(GameObject NewCamera)

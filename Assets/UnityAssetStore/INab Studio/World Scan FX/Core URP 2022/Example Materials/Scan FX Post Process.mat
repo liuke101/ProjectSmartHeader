@@ -82,7 +82,7 @@ Material:
     - _EdgeColor: {r: 0.73179066, g: 1.5221245, b: 7.4642644, a: 1}
     - _Forward: {r: 0, g: 0, b: 1, a: 0}
     - _HighlightColor: {r: 11.823846, g: 12.945071, b: 25.992073, a: 1}
-    - _Origin: {r: 0.001, g: 0.001, b: 0.001, a: 0}
+    - _Origin: {r: 0.001, g: 0, b: 0.001, a: 0}
     - _OverlayColor: {r: 0, g: 7.376202, b: 145.31859, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8331459826602276235
