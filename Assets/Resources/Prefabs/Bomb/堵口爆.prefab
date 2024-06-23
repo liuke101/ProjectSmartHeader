@@ -98,7 +98,7 @@ GameObject:
   m_Layer: 6
   m_Name: "\u5835\u53E3\u7206"
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -180,13 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5fbf5587f443b49055ea5348846bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EBombType: 1
+  BombType: 0
   LifeTime: 15
-  ExplosionFX: {fileID: 5861307760274545730, guid: 9bc307e300eb3324d9d5ef56daa8d25b,
-    type: 3}
-  BombHoleDecal: {fileID: 6764341859215599262, guid: a9ee7977da74b1043b2a646916563e91,
-    type: 3}
   StrikeLevelData: {fileID: 11400000, guid: 119514884864dc64d9112a55e6820006, type: 2}
+  BombTypeData: {fileID: 11400000, guid: 824756a6c78d54c479d2d12f52db63c2, type: 2}
   TargetPosition: {x: 0, y: 0, z: 0}
   speed: 300
   MinDistance: 0.5

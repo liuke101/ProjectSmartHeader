@@ -17,7 +17,7 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     private WebSocket WebSocket;
     
     // 消费者队列
-    private readonly ConcurrentQueue<string> CustomerQueue = new ConcurrentQueue<string>();
+    //private readonly ConcurrentQueue<string> CustomerQueue = new ConcurrentQueue<string>();
     
     // 连接协程
     private Coroutine SubscriptionCoroutine;
@@ -42,7 +42,7 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
 
     private void Update()
     {
-        ProcessMessage();
+        //ProcessMessage();
     }
 
     private void OnDestroy()
@@ -82,7 +82,17 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
         else if(message.Contains("explosion")) 
         {
             //处理数据后入队
-            CustomerQueue.Enqueue(JsonParser(message));
+            //CustomerQueue.Enqueue(JsonParser(message));
+            
+            //将json解析为项目所用数据结构
+            ExplosiveSourceData data = JsonMapper.ToObject<ExplosiveSourceData>(JsonParser(message));
+             
+            //广播有效数据
+            if(data != null)
+            {
+                OnExplosiveSourceMessageReceived?.Invoke(data);
+                MessageBox.Instance.PrintExplosionData(data);
+            }
         }
     }
     
@@ -101,20 +111,20 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
         }
     }
     
-    private void ProcessMessage()
-    {
-        while (CustomerQueue.TryDequeue(out var message))
-        {
-             ExplosiveSourceData data = JsonMapper.ToObject<ExplosiveSourceData>(message);
-             
-             //广播有效数据
-             if(data != null)
-             {
-                 OnExplosiveSourceMessageReceived?.Invoke(data);
-                 MessageBox.Instance.PrintExplosionData(data);
-             }
-        }
-    }
+    // private void ProcessMessage()
+    // {
+    //     while (CustomerQueue.TryDequeue(out var message))
+    //     {
+    //          ExplosiveSourceData data = JsonMapper.ToObject<ExplosiveSourceData>(message);
+    //          
+    //          //广播有效数据
+    //          if(data != null)
+    //          {
+    //              OnExplosiveSourceMessageReceived?.Invoke(data);
+    //              MessageBox.Instance.PrintExplosionData(data);
+    //          }
+    //     }
+    // }
 
     //将json解析为项目所用格式
     private string JsonParser(string message)

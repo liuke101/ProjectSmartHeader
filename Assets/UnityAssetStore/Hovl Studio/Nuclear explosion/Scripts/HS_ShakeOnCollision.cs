@@ -29,8 +29,9 @@ public class HS_ShakeOnCollision : MonoBehaviour
     private AudioSource soundComponent;
     private AudioClip explosionClip;
 
-
-    private ScanFXHighlight terrainScanFXHighlight;
+    [Space]
+    [Header("ScanFX")]
+    private ScanFXHighlight ScanFXHighlight;
     void Start()
     {
         soundComponent = GetComponent<AudioSource>();
@@ -70,11 +71,11 @@ public class HS_ShakeOnCollision : MonoBehaviour
                         StartCoroutine(cameraShaker.Shake(amplitude, frequency, duration, timeRemaining));
                     }
                     
-                    //高亮地形
-                    terrainScanFXHighlight = hitCollider.GetComponent<ScanFXHighlight>();
-                    if ( terrainScanFXHighlight != null)
+                    //高亮地形扫描到的物体
+                    ScanFXHighlight = hitCollider.GetComponent<ScanFXHighlight>();
+                    if (ScanFXHighlight != null)
                     {
-                        terrainScanFXHighlight.PlayEffect();
+                        ScanFXHighlight.PlayEffect();
                     }
                     
                     addedColliders.Add(hitCollider);

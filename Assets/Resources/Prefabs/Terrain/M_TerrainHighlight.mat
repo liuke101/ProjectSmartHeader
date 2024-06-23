@@ -173,7 +173,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HighlighValue: 1
-    - _HighlightValue: 0.18
+    - _HighlightValue: 0.2
     - _MaskHardness: 0.439
     - _MaskPower: 1
     - _MaskRadius: 1000
@@ -190,7 +190,7 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
-    - _Rim_Power: 0.7
+    - _Rim_Power: 0.8
     - _Size: 7.37
     - _SizeAdjust: 0
     - _Smoothness: 0
@@ -229,13 +229,13 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.762597, g: 1, b: 0.70754707, a: 1}
     - _Color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Forward: {r: 0, g: 0, b: 1, a: 0}
     - _Origin: {r: 0.001, g: 0.001, b: 0.001, a: 0}
-    - _Rim_Color: {r: 0, g: 0.3931771, b: 0.02470218, a: 0}
+    - _Rim_Color: {r: 1.9150065, g: 7.9999995, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

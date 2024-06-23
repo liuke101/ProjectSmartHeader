@@ -46,7 +46,7 @@ namespace INab.WorldScanFX
             uiComponent.SetActive(false);
             
             //绑定相机切换事件
-            CameraManager.Instance.SwitchCameraEvent.AddListener(UpdatePlayerCamera);
+            CameraManager.Instance?.SwitchCameraEvent.AddListener(UpdatePlayerCamera);
             
             //绑定高亮事件
             GetComponent<ScanFXHighlight>().highlightEvent.AddListener(StartEffect);

@@ -1,32 +1,24 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
-public enum EBombType 
-{
-    温压弹,
-    堵口爆,
-    核弹,
-}
-
 public class Bomb : MonoBehaviour
 {
     [Header("炸弹参数")]
-    public EBombType EBombType; //炸弹类型
+    public EBombType BombType; //炸弹类型
     public float LifeTime = 10.0f; //生命周期，防止未发生碰撞炸弹一直存在
-    public GameObject ExplosionFX; //爆炸特效
-    public GameObject BombHoleDecal; //炸弹贴花
     public StrikeLevelData StrikeLevelData;
+    public BombTypeData BombTypeData;
     
-    [HideInInspector]
-    public Vector3 TargetPosition;  // 目标点Transform
+    [HideInInspector]public Vector3 TargetPosition;  // 目标点Transform
     public float speed = 10; // 运动速度
     public float MinDistance = 0.5f; // 最小接近距离, 以停止运动
     private float DistanceToTarget;
     private bool bCanMove = true;
-    public int StrikeLevel;
+    [HideInInspector]public int StrikeLevel;
     private bool bHasBoom = false;  //已爆炸过
     
     
@@ -62,22 +54,22 @@ public class Bomb : MonoBehaviour
     protected virtual void Explosion()
     {
         //爆炸特效和爆炸冲击波
-        if(ExplosionFX)
+        GameObject ExplosionVFX = BombTypeData?.GetAssetByBombType(BombType).ExplosionVFX;
+        if(ExplosionVFX!=null)
         {
-            GameObject Explosion = Instantiate(ExplosionFX, transform.position, Quaternion.identity);
-            if (Explosion != null)
+            GameObject NewExplosionVFX = Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
+            if (NewExplosionVFX != null)
             {
-                HS_ShakeOnCollision shakeOnCollision = Explosion.GetComponentInChildren<HS_ShakeOnCollision>();
+                HS_ShakeOnCollision shakeOnCollision = NewExplosionVFX.GetComponentInChildren<HS_ShakeOnCollision>();
                 if(shakeOnCollision !=null && StrikeLevel>0 && StrikeLevelData.BombHoleDecalSize.Count >= 4)
                 {
                     //根据等级设置ShakeWave影响范围
                     shakeOnCollision.explosionFinalRadious = StrikeLevelData.ShockWaveRange[StrikeLevel-1];
-                    
+                
                     //TODO:振动频率等参数待调整
                 }
             }
-
-            Destroy(Explosion.gameObject, 20.0f); //销毁时间待定
+            Destroy(NewExplosionVFX.gameObject, 20.0f); //销毁时间待定
         }
         
         //扫描线
@@ -94,18 +86,19 @@ public class Bomb : MonoBehaviour
         }
 
         //爆炸弹坑Decal
-        if (BombHoleDecal)
+        GameObject BombHoleDecal = BombTypeData?.GetAssetByBombType(BombType).BombHoleDecal;
+        if(BombHoleDecal!=null)
         {
-            GameObject Decal = Instantiate(BombHoleDecal, transform.position, Quaternion.Euler(90, 0, 0)); //生成炸弹贴花，绕X轴旋转90度，正对地面
+            GameObject NewDecal = Instantiate(BombHoleDecal, transform.position, Quaternion.Euler(90, 0, 0)); //生成炸弹贴花，绕X轴旋转90度，正对地面
             
             //根据等级设置弹坑贴花大小
             if (StrikeLevel>0 && StrikeLevelData.BombHoleDecalSize.Count >= 4)
             {
                 float DecalSize = StrikeLevelData.BombHoleDecalSize[StrikeLevel-1];
-                Decal.GetComponent<DecalProjector>().size = new Vector3(DecalSize, DecalSize, DecalSize);
+                NewDecal.GetComponent<DecalProjector>().size = new Vector3(DecalSize, DecalSize, DecalSize);
             }
             
-            Destroy(Decal.gameObject, 60.0f);
+            Destroy(NewDecal.gameObject, 60.0f);
         }
 
         //销毁炮弹

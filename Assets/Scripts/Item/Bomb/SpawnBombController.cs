@@ -11,6 +11,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
     public List<GameObject> BombObjects;
     public ScanFX ScanFX;
     public StrikeLevelData StrikeLevelData;
+    public BombTypeData BombTypeData;
     
     [Header("测试生成参数")]
     public List<Vector3> SpawnPositions;
@@ -18,6 +19,8 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
     
     [Header("委托/事件")]
     public UnityEvent<ExplosiveSourceData> ExplosionDataEvent; //用于向UI发送爆源数据的事件
+    
+    
 
     protected override void Awake()
     {
@@ -43,31 +46,37 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
          
          //根据type生成对应类型的炸弹
          GameObject BombObject = null;
-         switch (Random.Range(0,3)) //type
+         GameObject BombPointerVFX = null;
+         
+         switch (Random.Range(0,3)) //随机类型
          {
              case 0:
-                 BombObject = BombObjects.Find(bombobject =>
-                     bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.温压弹);
+                 BombObject = BombTypeData.GetAssetByBombType(EBombType.温压弹).BombObject;
+                 BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.温压弹).PointerVFX;
                  break;
              case 1:
-                 BombObject = BombObjects.Find(bombobject =>
-                     bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.堵口爆);
+                 BombObject = BombTypeData.GetAssetByBombType(EBombType.堵口爆).BombObject;
+                 BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.堵口爆).PointerVFX;
                  break;
              case 2:
-                 BombObject = BombObjects.Find(bombobject =>
-                     bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.核弹);
+                 BombObject = BombTypeData.GetAssetByBombType(EBombType.核爆).BombObject;
+                 BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.核爆).PointerVFX;
                  break;
+         }
+
+         if (BombPointerVFX)
+         {
+             SpwanPointerVFX(BombPointerVFX, TargetPosition);
          }
 
          if (BombObject != null)
          {
              SpawnBomb(BombObject, SpawnPosion, SpwanRotation, TargetPosition, StrikeLevel);
              
-             
              //广播
              ExplosiveSourceData data = new ExplosiveSourceData()
              {
-                 type = BombObject.GetComponentInChildren<Bomb>().EBombType.ToString(),
+                 type = BombObject.GetComponentInChildren<Bomb>().BombType.ToString(),
                  strike_level = StrikeLevel,
                  x_coordinate = TargetPosition.x,
                  y_coordinate = TargetPosition.z
@@ -96,22 +105,28 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
 
         Vector3 TargetPosition = new Vector3(x_coordinate, 0, y_coordinate);
 
-        //根据type生成对应类型的炸弹
+        //根据type生成对应类型的 炸弹 和 指示特效
         GameObject BombObject = null;
+        GameObject BombPointerVFX = null;
         switch (type) //type
         {
             case "温压弹":
-                BombObject = BombObjects.Find(bombobject =>
-                    bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.温压弹);
+                BombObject = BombTypeData.GetAssetByBombType(EBombType.温压弹).BombObject;
+                BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.温压弹).PointerVFX;
                 break;
             case "堵口爆":
-                BombObject = BombObjects.Find(bombobject =>
-                    bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.堵口爆);
+                BombObject = BombTypeData.GetAssetByBombType(EBombType.堵口爆).BombObject;
+                BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.堵口爆).PointerVFX;
                 break;
-            case "核弹":
-                BombObject = BombObjects.Find(bombobject =>
-                    bombobject.GetComponentInChildren<Bomb>().EBombType == EBombType.核弹);
+            case "核爆":
+                BombObject = BombTypeData.GetAssetByBombType(EBombType.核爆).BombObject;
+                BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.核爆).PointerVFX;
                 break;
+        }
+        
+        if (BombPointerVFX)
+        {
+            SpwanPointerVFX(BombPointerVFX, TargetPosition);
         }
 
         if (BombObject != null)
@@ -120,16 +135,10 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         }
     }
     
-    
     /// <summary>
     /// 生成炮弹
     /// </summary>
-    /// <param name="BombObject"></param>
-    /// <param name="SpawnPosion"></param>
-    /// <param name="SpwanRotation">控制炮弹发射角度</param>
-    /// <param name="TargetPosition"></param>
-    /// <param name="StrikeLevel"></param>
-    public virtual void SpawnBomb(GameObject BombObject, Vector3 SpawnPosion, Quaternion SpwanRotation, Vector3 TargetPosition, int StrikeLevel)
+    private void SpawnBomb(GameObject BombObject, Vector3 SpawnPosion, Quaternion SpwanRotation, Vector3 TargetPosition, int StrikeLevel)
     {
         //生成炸弹
         Bomb bomb = Instantiate(BombObject.GetComponentInChildren<Bomb>(), SpawnPosion, SpwanRotation);
@@ -142,4 +151,27 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
             ScanFX.SetScanRange(StrikeLevelData.ShockWaveRange[StrikeLevel-1]);
         }
     }
+    
+    /// <summary>
+    /// 生成指示特效
+    /// </summary>
+    private void SpwanPointerVFX(GameObject PointerVFX, Vector3 TargetPosition)
+    {
+        //竖直向下射出射线
+        Ray ray = new Ray(new Vector3(TargetPosition.x, 1000, TargetPosition.z), Vector3.down);
+        
+        //在交点位置生成指示特效
+        if (Physics.Raycast(
+                ray,
+                out RaycastHit hit,
+                1500,
+                1 << LayerMask.NameToLayer("Terrain"), 
+                QueryTriggerInteraction.Ignore))
+        {
+            //生成指示特效
+            GameObject pointerVFX = Instantiate(PointerVFX, hit.point, Quaternion.identity);
+            Destroy(pointerVFX, 5.0f);
+        }
+    }
+    
 }

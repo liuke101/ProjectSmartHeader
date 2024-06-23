@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
+//打击等级相关的数据
 [CreateAssetMenu (fileName = "StrikeLevelData", menuName = "ScriptableObjects/StrikeLevelData", order = 0)]
 public class StrikeLevelData : ScriptableObject
 {
