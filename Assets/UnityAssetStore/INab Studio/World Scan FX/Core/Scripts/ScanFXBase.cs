@@ -412,7 +412,8 @@ namespace INab.WorldScanFX
 
                 SetCurrentScanValue(currentScanValue);
 
-                if (timeLeft > 0) CustomHighlightObjects(currentScanValue);
+                //改为通过HS_ShakeOnCollsoin脚本调用StartEffect
+                //if (timeLeft > 0) CustomHighlightObjects(currentScanValue);
 
                 if (timeLeft <= 0)
                 {
@@ -519,6 +520,7 @@ namespace INab.WorldScanFX
                     float output = distance - scan > 1 ? 0 : 1;
 
                     // Make sure that no object outside the mask radius is highlighted
+                    // 每帧检测爆点距离对象的距离是否大于MaskRadius, 大于则高亮
                     float maskOffset = (_MaskRadius - MaskRadiusOffset) > distance ? 1 : 0;
                     output *= maskOffset;
 

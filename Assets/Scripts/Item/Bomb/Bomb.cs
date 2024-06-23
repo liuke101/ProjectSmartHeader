@@ -16,8 +16,8 @@ public class Bomb : MonoBehaviour
     [Header("炸弹参数")]
     public EBombType EBombType; //炸弹类型
     public float LifeTime = 10.0f; //生命周期，防止未发生碰撞炸弹一直存在
-    public ParticleSystem ExplosionParticle; //爆炸粒子
-    public DecalProjector BombHoleDecal; //炸弹贴花
+    public GameObject ExplosionFX; //爆炸特效
+    public GameObject BombHoleDecal; //炸弹贴花
     public StrikeLevelData StrikeLevelData;
     
     [HideInInspector]
@@ -54,15 +54,29 @@ public class Bomb : MonoBehaviour
             Explosion(); //碰撞后爆炸
         }
         
+        GetComponent<Collider>().isTrigger = false; //关闭触发器
+        
         bHasBoom = true;
     }
     
     protected virtual void Explosion()
     {
-        //爆炸粒子
-        if(ExplosionParticle)
+        //爆炸特效和爆炸冲击波
+        if(ExplosionFX)
         {
-            ParticleSystem Explosion = Instantiate(ExplosionParticle, transform.position, Quaternion.identity); 
+            GameObject Explosion = Instantiate(ExplosionFX, transform.position, Quaternion.identity);
+            if (Explosion != null)
+            {
+                HS_ShakeOnCollision shakeOnCollision = Explosion.GetComponentInChildren<HS_ShakeOnCollision>();
+                if(shakeOnCollision !=null && StrikeLevel>0 && StrikeLevelData.BombHoleDecalSize.Count >= 4)
+                {
+                    //根据等级设置ShakeWave影响范围
+                    shakeOnCollision.explosionFinalRadious = StrikeLevelData.ShockWaveRange[StrikeLevel-1];
+                    
+                    //TODO:振动频率等参数待调整
+                }
+            }
+
             Destroy(Explosion.gameObject, 20.0f); //销毁时间待定
         }
         
@@ -82,16 +96,16 @@ public class Bomb : MonoBehaviour
         //爆炸弹坑Decal
         if (BombHoleDecal)
         {
-            DecalProjector decalProjector = Instantiate(BombHoleDecal, transform.position, Quaternion.Euler(90, 0, 0)); //生成炸弹贴花，绕X轴旋转90度，正对地面
-
+            GameObject Decal = Instantiate(BombHoleDecal, transform.position, Quaternion.Euler(90, 0, 0)); //生成炸弹贴花，绕X轴旋转90度，正对地面
+            
             //根据等级设置弹坑贴花大小
             if (StrikeLevel>0 && StrikeLevelData.BombHoleDecalSize.Count >= 4)
             {
                 float DecalSize = StrikeLevelData.BombHoleDecalSize[StrikeLevel-1];
-                decalProjector.size = new Vector3(DecalSize, DecalSize, DecalSize); 
+                Decal.GetComponent<DecalProjector>().size = new Vector3(DecalSize, DecalSize, DecalSize);
             }
             
-            Destroy(decalProjector.gameObject, 60.0f);
+            Destroy(Decal.gameObject, 60.0f);
         }
 
         //销毁炮弹

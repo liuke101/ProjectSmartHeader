@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4309548941320137071}
   - component: {fileID: 9140232118436320508}
+  - component: {fileID: 8342659307218080498}
   m_Layer: 0
   m_Name: BombHoleDecal
   m_TagString: Untagged
@@ -56,3 +57,18 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0}
   m_Size: {x: 100, y: 100, z: 100}
   m_FadeFactor: 1
+--- !u!114 &8342659307218080498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6764341859215599262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b751e32e512e43d5acb14e5465bffb39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecalMaterials:
+  - {fileID: 2100000, guid: e45f0ab5bbad7304db99ee8d0b1353a8, type: 2}
+  - {fileID: 2100000, guid: df583b6196245d945999c18315e18d81, type: 2}

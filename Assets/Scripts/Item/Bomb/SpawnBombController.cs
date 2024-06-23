@@ -13,8 +13,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
     public StrikeLevelData StrikeLevelData;
     
     [Header("测试生成参数")]
-    public Vector2 SpawnRange = new Vector2(1000, 2000);
-    public float SpwanHeight= 1000.0f;
+    public List<Vector3> SpawnPositions;
     public float TargetRange= 500.0f;
     
     [Header("委托/事件")]
@@ -37,7 +36,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         
         //暂时随机生成
          int StrikeLevel = Random.Range(1, 5);
-         Vector3 SpawnPosion = new Vector3(Random.Range(SpawnRange.x, SpawnRange.y), SpwanHeight,Random.Range(SpawnRange.x, SpawnRange.y));
+         Vector3 SpawnPosion = SpawnPositions[Random.Range(0, SpawnPositions.Count)];
          Quaternion SpwanRotation = Quaternion.AngleAxis(-80, Vector3.right);  //四元数绕x轴旋转-80度
          
          Vector3 TargetPosition = new Vector3(Random.Range(-TargetRange, TargetRange), 0, Random.Range(-TargetRange, TargetRange));
@@ -92,8 +91,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         float x_coordinate = data.x_coordinate;
         float y_coordinate = data.y_coordinate;
 
-        Vector3 SpawnPosion = new Vector3(Random.Range(SpawnRange.x, SpawnRange.y), SpwanHeight,
-            Random.Range(SpawnRange.x, SpawnRange.y));
+        Vector3 SpawnPosion = SpawnPositions[Random.Range(0, SpawnPositions.Count)];
         Quaternion SpwanRotation = Quaternion.AngleAxis(-80, Vector3.right); //四元数绕x轴旋转-80度
 
         Vector3 TargetPosition = new Vector3(x_coordinate, 0, y_coordinate);

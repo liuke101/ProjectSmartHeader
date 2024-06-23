@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using INab.WorldScanFX;
 using UnityEngine;
 
 public class HS_ShakeOnCollision : MonoBehaviour
@@ -27,6 +29,8 @@ public class HS_ShakeOnCollision : MonoBehaviour
     private AudioSource soundComponent;
     private AudioClip explosionClip;
 
+
+    private ScanFXHighlight terrainScanFXHighlight;
     void Start()
     {
         soundComponent = GetComponent<AudioSource>();
@@ -55,6 +59,7 @@ public class HS_ShakeOnCollision : MonoBehaviour
             {
                 if (!addedColliders.Contains(hitCollider))
                 {
+                    //震动相机
                     if (hitCollider.GetComponent<HS_CameraShaker>() != null && hitCollider.GetComponent<AudioSource>())
                     {
                         AudioSource soundComponent2 = hitCollider.GetComponent<AudioSource>();
@@ -64,6 +69,14 @@ public class HS_ShakeOnCollision : MonoBehaviour
                         cameraShaker = hitCollider.GetComponent<HS_CameraShaker>();
                         StartCoroutine(cameraShaker.Shake(amplitude, frequency, duration, timeRemaining));
                     }
+                    
+                    //高亮地形
+                    terrainScanFXHighlight = hitCollider.GetComponent<ScanFXHighlight>();
+                    if ( terrainScanFXHighlight != null)
+                    {
+                        terrainScanFXHighlight.PlayEffect();
+                    }
+                    
                     addedColliders.Add(hitCollider);
                 }
             }
@@ -78,7 +91,7 @@ public class HS_ShakeOnCollision : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionCurrentRadious);

@@ -18,7 +18,7 @@ MonoBehaviour:
   - 400
   - 500
   BombHoleDecalSize:
-  - 1
-  - 1
-  - 1
-  - 1
+  - 50
+  - 100
+  - 150
+  - 200
