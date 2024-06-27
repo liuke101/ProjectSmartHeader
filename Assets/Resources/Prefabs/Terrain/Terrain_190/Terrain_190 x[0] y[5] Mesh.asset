@@ -129,8 +129,8 @@ Mesh:
       m_BitSize: 10
     m_Tangents:
       m_NumItems: 130
-      m_Range: 1.0485852
-      m_Start: -0.048585147
+      m_Range: 1.0485775
+      m_Start: -0.048577577
       m_Data: fe03f0ff06ffbff07f0efff3e0bf00ff53f0ff09ffc7f03f0efe43f0bf05ff8bf0ff0affbff0ff08ff8bf0ff09ffb7f03f0cffc3f03f0cffc3f0bf0cffd3f0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbff0ff0bffbf00
       m_BitSize: 10
     m_Weights:
