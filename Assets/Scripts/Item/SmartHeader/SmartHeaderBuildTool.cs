@@ -7,6 +7,9 @@ using UnityEngine.Serialization;
 
 namespace Item.SmartHeader
 {
+    /// <summary>
+    /// 初始化模型构建工具
+    /// </summary>
     public class SmartHeaderBuildTool : MonoBehaviour
     {
         public SmartHeader smartHeader;
@@ -26,11 +29,15 @@ namespace Item.SmartHeader
         public List<GameObject> ElecVibrationVelocitySensors = new List<GameObject>(); //电类振动速度传感器
         public List<GameObject> Air_OverpressureSensors = new List<GameObject>(); //空气超压传感器
 
-        private void Awake()
+        protected void Awake()
         {
             if(smartHeader == null) smartHeader = GetComponent<SmartHeader>();
         }
 
+        /// <summary>
+        /// 执行：点击脚本界面的“初始化模型”按钮 或 点击脚本右边三点，选择“初始化模型”
+        /// 功能：为所有模型子对象添加组件和材质
+        /// </summary>
         [ContextMenu("初始化模型")]
         public void Init()
         {
@@ -50,7 +57,7 @@ namespace Item.SmartHeader
             //从Resources文件夹中加载材质数据
             if (HeaderModelData == null)
             {
-                HeaderModelData = Resources.Load<HeaderModelData>("ScriptableObjects/HeaderMaterialData");
+                HeaderModelData = Resources.Load<HeaderModelData>("ScriptableObjects/HeaderModelData");
             }
             
             if (smartHeader == null || HeaderModelData == null) return;
@@ -81,7 +88,10 @@ namespace Item.SmartHeader
                     subObjects.Add(child.gameObject);
                     
                     //添加组件
-                    child.gameObject.AddComponent<T>();
+                    if (child.gameObject.GetComponent<T>() == null)
+                    {
+                        child.gameObject.AddComponent<T>();
+                    }
                 
                     //添加材质
                     if (bAddMaterial)

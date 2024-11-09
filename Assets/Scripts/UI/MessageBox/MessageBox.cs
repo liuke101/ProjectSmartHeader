@@ -18,7 +18,7 @@ public class MessageBox : MonoSingleton<MessageBox>
             //换行
             _textMeshPro.text += "\n";
                 
-            _textMeshPro.text += $"<color=blue>{System.DateTime.Now} </color> <color=black>{message}</color>";
+            _textMeshPro.text += $"<color=green>{System.DateTime.Now} </color> <color=white>{message}</color>";
             //设置字体颜色
             _textMeshPro.color = Color.red;
             

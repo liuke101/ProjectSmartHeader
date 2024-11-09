@@ -1,2 +1,0 @@
-Preferred URP Settings is a proper settings for URP mobile target
-You can customize it too

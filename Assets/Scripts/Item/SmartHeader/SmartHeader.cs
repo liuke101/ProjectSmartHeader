@@ -3,22 +3,19 @@ using UnityEngine;
 
 namespace Item.SmartHeader
 {
-    //[RequireComponent(typeof(ScanFXHighlight), typeof(CustomUIHighlight), typeof(MeshCollider))]
+    /// <summary>
+    /// 智能头部
+    /// </summary>
+    [RequireComponent(typeof(SmartHeaderBuildTool))]
     public class SmartHeader : MonoBehaviour
     {
-        // private ScanFXHighlight scanFXHighlight;
-        // private CustomUIHighlight customUIHighlight;
-        //
-        // private void Awake()
-        // {
-        //     scanFXHighlight = GetComponent<ScanFXHighlight>();
-        //     if (scanFXHighlight)
-        //     {
-        //         scanFXHighlight.renderers.Add(GetComponent<Renderer>());
-        //     }
-        //
-        //     customUIHighlight = GetComponent<CustomUIHighlight>();
-        // }
-
+        //脚本界面添加一个按钮，点击执行SmartHeaderBuildTool的Init方法
+        private SmartHeaderBuildTool smartHeaderBuildTool;
+        
+        private void Awake()
+        {
+            smartHeaderBuildTool = GetComponent<SmartHeaderBuildTool>();
+        }
+        
     }
 }
