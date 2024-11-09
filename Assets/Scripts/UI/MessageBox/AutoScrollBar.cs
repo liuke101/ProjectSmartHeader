@@ -36,8 +36,6 @@ public class AutoScrollBar : MonoBehaviour
             yield return null;
         }
     }
-    
-    
 }
 
 

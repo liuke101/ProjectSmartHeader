@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TerrainsAddScriptsTool : MonoBehaviour
 {
-    //遍历儿子, 添加脚本
+    //遍历子对象, 添加脚本
     [ContextMenu("所有Terrain Mesh子对象添加高亮脚本")]
     public void AddTerrainHighlightScripts()
     {

@@ -14,9 +14,4 @@ public class BombHoleDecal : MonoBehaviour
         //随机设置贴花材质
         if (decalProjector != null) decalProjector.material = DecalMaterials[UnityEngine.Random.Range(0, DecalMaterials.Count)];
     }
-
-    public void SetRandomDecalMaterial()
-    {
-        
-    }
 }
