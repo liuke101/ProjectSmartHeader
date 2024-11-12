@@ -4,6 +4,7 @@ using JsonStruct;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
+using TMPro;
 
 public class SpawnBombController : MonoSingleton<SpawnBombController>
 {
@@ -20,7 +21,9 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
     [Header("委托/事件")]
     public UnityEvent<ExplosiveSourceData> ExplosionDataEvent; //用于向UI发送爆源数据的事件
     
-    
+    [Header("UI组件")]
+    public TextMeshProUGUI distanceText; // 新增显示距离的文本组件
+    public Transform modelTransform;  // 用于计算距离的模型 Transform
 
     protected override void Awake()
     {
@@ -84,6 +87,18 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
              
              ExplosionDataEvent?.Invoke(data);
              MessageBox.Instance.PrintExplosionData(data);
+             // 更新 statusText 文本
+             // Debug.Log($"类型: {data.type}\n等级: {data.strike_level}\n坐标: ({data.x_coordinate:F3}, {data.y_coordinate:F3})");
+             if (WebSocketConsumer.Instance != null)
+             {
+                 WebSocketConsumer.Instance.UpdateStatusText($"类型: {data.type}\n等级: {data.strike_level}\n坐标: ({data.x_coordinate:F3}, {data.y_coordinate:F3})");
+             }
+             else
+             {
+                 Debug.LogError("WebSocketConsumer.Instance is null!");
+             }
+             // 计算并显示爆源和模型的距离
+             UpdateDistanceText(TargetPosition);
          }
     }
 
@@ -132,6 +147,17 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
         if (BombObject != null)
         {
             SpawnBomb(BombObject, SpawnPosion, SpwanRotation, TargetPosition, strike_level);
+            // 计算并显示爆源和模型的距离
+            UpdateDistanceText(TargetPosition);
+        }
+    }
+    
+    private void UpdateDistanceText(Vector3 TargetPosition)
+    {
+        if (distanceText != null && modelTransform != null)
+        {
+            float distance = Vector3.Distance(modelTransform.position, TargetPosition);
+            distanceText.text = $"爆源距离: {distance:F1}米";
         }
     }
     

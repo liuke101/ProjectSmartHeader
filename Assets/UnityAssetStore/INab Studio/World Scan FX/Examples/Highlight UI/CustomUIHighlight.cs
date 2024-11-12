@@ -110,6 +110,11 @@ namespace INab.WorldScanFX
             }
             else
             {
+                // 如果没有绑定相机，尝试通过默认相机来获取位置
+                if (ViewCamera == null)
+                {
+                    ViewCamera = Camera.main;  // 使用主相机
+                }
                 // Calculate distance between player and UI
                 if (ViewCamera)
                 {
@@ -120,23 +125,23 @@ namespace INab.WorldScanFX
 
                     // Calculate new position for UI based on player's camera
                     // check if position is behind camera
-                    if (ViewCamera != null)
-                    {
-                        bool isBehindCamera = ViewCamera.WorldToScreenPoint(transform.position).z < 0;
-                        var rect = uiComponent.GetComponent<RectTransform>();
-
-                        if (!isBehindCamera)
-                        {
-                            var newPosition =
-                                ViewCamera.WorldToScreenPoint(transform.position + new Vector3(0, offsetY, 0));
-                            rect.position = newPosition;
-                        }
-
-                        // Adjust scale of UI based on distance
-                        currentScale = Mathf.Clamp01(scaleAdjustment / distance);
-                        if (!isCurrentlyScaling)
-                            rect.localScale = new Vector3(currentScale, currentScale, currentScale);
-                    }
+                    // if (ViewCamera != null)
+                    // {
+                    //     bool isBehindCamera = ViewCamera.WorldToScreenPoint(transform.position).z < 0;
+                    //     var rect = uiComponent.GetComponent<RectTransform>();
+                    //
+                    //     if (!isBehindCamera)
+                    //     {
+                    //         var newPosition =
+                    //             ViewCamera.WorldToScreenPoint(transform.position + new Vector3(0, offsetY, 0));
+                    //         rect.position = newPosition;
+                    //     }
+                    //
+                    //     // // Adjust scale of UI based on distance
+                    //     // currentScale = Mathf.Clamp01(scaleAdjustment / distance);
+                    //     // if (!isCurrentlyScaling)
+                    //     //     rect.localScale = new Vector3(currentScale, currentScale, currentScale);
+                    // }
                 }
             }
         }

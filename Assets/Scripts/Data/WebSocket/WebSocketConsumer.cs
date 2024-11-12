@@ -7,6 +7,7 @@ using Best.WebSockets.Implementations;
 using JsonStruct;
 using LitJson;
 using UnityEngine.Events;
+using TMPro;
 
 public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
 {
@@ -15,6 +16,58 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     public string SubscribeMessage = "START-SEND-EVENTS?filter=eq(thingId,\"edu.whut.cs.iot.se:ship\")";
     public string SubscribeACK = "START-SEND-EVENTS:ACK";
     private WebSocket WebSocket;
+    
+    public TextMeshProUGUI distanceText;  // 新增用于显示距离的文本组件
+    public Transform modelTransform;  // 用于计算与爆源的距离的模型的Transform
+    
+    public GameObject statusTextParent;     // statusText 的父对象
+    private Coroutine displayCoroutine;
+    // TextMeshPro UI 元素
+    public TextMeshProUGUI statusText;
+    // 定义一个确定的目标坐标
+    Vector3 targetPosition = new Vector3(0f, 175f, 0f);
+    // 更新 statusText 的方法
+    public void UpdateStatusText(string message)
+    {
+        if (statusText != null)
+        {
+            statusText.text = message;
+            // Debug.Log("statusText updated with message: " + message);
+            // 如果有正在进行的协程，先停止它
+            if (displayCoroutine != null)
+            {
+                StopCoroutine(displayCoroutine);
+            }
+
+            // 启动新的协程来显示父对象5秒
+            displayCoroutine = StartCoroutine(DisplayStatusTextForSeconds(4,5));
+        }
+        else
+        {
+            Debug.LogError("statusText is not assigned in WebSocketConsumer!");
+        }
+    }
+    // 协程：显示父对象并等待指定时间后隐藏
+    private IEnumerator DisplayStatusTextForSeconds(float delay, float displayDuration)
+    {
+        // 先等待指定的延迟时间
+        yield return new WaitForSeconds(delay);
+
+        // 显示父对象
+        RectTransform rectTransform = statusTextParent.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            // 设置目标位置（注意：这里的坐标是相对于父物体的）
+            rectTransform.anchoredPosition = targetPosition;
+        }
+        statusTextParent.SetActive(true);
+
+        // 再等待显示时间
+        yield return new WaitForSeconds(displayDuration);
+
+        // 隐藏父对象
+        statusTextParent.SetActive(false);
+    }
     
     // 连接协程
     private Coroutine SubscriptionCoroutine;
@@ -89,6 +142,16 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
             {
                 OnExplosiveSourceMessageReceived?.Invoke(data);
                 MessageBox.Instance.PrintExplosionData(data);
+                // 计算爆源和模型的距离
+                Vector3 explosionPosition = new Vector3(data.x_coordinate, 0, data.y_coordinate);
+                float distance = Vector3.Distance(modelTransform.position, explosionPosition);
+
+                // 将距离显示在distanceText上
+                distanceText.text = $"爆源距离: {distance:F1}米";
+                // 显示爆源数据到 Text UI
+                // statusText.text = "nihao";
+                Instance.UpdateStatusText($"类型: {data.type}\n等级: {data.strike_level}\n坐标: ({data.x_coordinate:F3}, {data.y_coordinate:F3})");
+                
             }
         }
     }
