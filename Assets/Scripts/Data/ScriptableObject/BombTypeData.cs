@@ -6,7 +6,7 @@ using UnityEngine;
 public enum EBombType 
 {
     温压弹,
-    堵口爆,
+    常规弹药打击,
     核爆,
 }
 

@@ -52,14 +52,17 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
          GameObject BombPointerVFX = null;
          
          switch (Random.Range(0,3)) //随机类型
+         // switch (1) //常规弹药打击测试
          {
              case 0:
                  BombObject = BombTypeData.GetAssetByBombType(EBombType.温压弹).BombObject;
                  BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.温压弹).PointerVFX;
                  break;
              case 1:
-                 BombObject = BombTypeData.GetAssetByBombType(EBombType.堵口爆).BombObject;
-                 BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.堵口爆).PointerVFX;
+                 BombObject = BombTypeData.GetAssetByBombType(EBombType.常规弹药打击).BombObject;
+                 BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.常规弹药打击).PointerVFX;
+                 // Debug.Log(BombObject.GetComponentInChildren<Bomb>());
+                 // Debug.Log(BombObject.GetComponentInChildren<Bomb>().BombType);
                  break;
              case 2:
                  BombObject = BombTypeData.GetAssetByBombType(EBombType.核爆).BombObject;
@@ -129,9 +132,9 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
                 BombObject = BombTypeData.GetAssetByBombType(EBombType.温压弹).BombObject;
                 BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.温压弹).PointerVFX;
                 break;
-            case "堵口爆":
-                BombObject = BombTypeData.GetAssetByBombType(EBombType.堵口爆).BombObject;
-                BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.堵口爆).PointerVFX;
+            case "常规弹药打击":
+                BombObject = BombTypeData.GetAssetByBombType(EBombType.常规弹药打击).BombObject;
+                BombPointerVFX = BombTypeData.GetAssetByBombType(EBombType.常规弹药打击).PointerVFX;
                 break;
             case "核爆":
                 BombObject = BombTypeData.GetAssetByBombType(EBombType.核爆).BombObject;
