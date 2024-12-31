@@ -104,7 +104,7 @@ public class SpawnBombController : MonoSingleton<SpawnBombController>
              UpdateDistanceText(TargetPosition);
          }
     }
-
+    
     public void SpawnBombByWebSocket(ExplosiveSourceData data)
     {
         if(BombObjects.Count == 0)

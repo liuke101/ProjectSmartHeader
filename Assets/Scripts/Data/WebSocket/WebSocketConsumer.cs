@@ -13,7 +13,12 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
 {
     [Header("WebSocket")]
     public string URL = "ws://ditto:ditto@10.151.1.109:8080/ws/2";
-    public string SubscribeMessage = "START-SEND-EVENTS?filter=eq(thingId,\"edu.whut.cs.iot.se:ship\")";
+    // 订阅多个 thingId
+    public string thingId1 = "edu.whut.cs.iot.se:ship";  // 第一个thingId
+    public string thingId2 = "edu.whut.cs.iot.se:construction";  // 第二个thingId
+    private string SubscribeMessage => 
+        $"START-SEND-EVENTS?filter=eq(thingId,\"{thingId1}\") OR eq(thingId,\"{thingId2}\")";  // 使用 OR 连接多个thingId
+
     public string SubscribeACK = "START-SEND-EVENTS:ACK";
     private WebSocket WebSocket;
     
@@ -27,6 +32,18 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     // 定义一个确定的目标坐标
     Vector3 targetPosition = new Vector3(0f, 175f, 0f);
     // 更新 statusText 的方法
+    // 五个 GameObject 用于显示 damage_percent 的不同值
+    public GameObject damageObject1;
+    public GameObject damageObject2;
+    public GameObject damageObject3;
+    public GameObject damageObject4;
+    public GameObject damageObject5;
+
+    // 用于计算颜色的区间
+    private readonly Color greenColor = Color.green;
+    private readonly Color yellowColor = Color.yellow;
+    private readonly Color redColor = Color.red;
+
     public void UpdateStatusText(string message)
     {
         if (statusText != null)
@@ -128,6 +145,17 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
             MessageBox.Instance.PrintMessage("WebSocket 订阅成功, 关闭协程");
             StopCoroutine(SubscriptionCoroutine);
         }
+        // 如果是json损伤百分比数据
+        else if (message.Contains("damage_percent"))
+        {
+            // 使用 JsonParserDamage 解析 damage_percent 数据
+            DamageData damageData = JsonParserDamage(message);
+            if (damageData != null)
+            {
+                // 更新 damage_percent 对应的颜色
+                UpdateComponentColors(damageData);
+            }
+        }
         // 如果是json爆源数据
         else if(message.Contains("explosion")) 
         {
@@ -156,6 +184,43 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
         }
     }
     
+    // 将损伤百分比数据解析为需要的格式
+    private void UpdateComponentColors(DamageData data)
+    {
+        // 根据 damage_percent 的值设置颜色
+        UpdateColorForComponent(damageObject1, data.damage_percent_1);
+        UpdateColorForComponent(damageObject2, data.damage_percent_2);
+        UpdateColorForComponent(damageObject3, data.damage_percent_3);
+        UpdateColorForComponent(damageObject4, data.damage_percent_4);
+        UpdateColorForComponent(damageObject5, data.damage_percent_5);
+    }
+
+    // 根据 damage_percent 值更新颜色
+    private void UpdateColorForComponent(GameObject component, float damagePercent)
+    {
+        // 获取该 GameObject 的 Renderer 组件
+        Renderer renderer = component.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            // 根据 damage_percent 划分颜色区间
+            Color color = Color.white;  // 默认白色
+            if (damagePercent <= 30)
+            {
+                color = greenColor;  // 0-30 区间，绿色
+            }
+            else if (damagePercent <= 70)
+            {
+                color = yellowColor;  // 30-70 区间，黄色
+            }
+            else
+            {
+                color = redColor;  // 70 以上，红色
+            }
+
+            // 设置物体颜色
+            renderer.material.color = color;
+        }
+    }
     private void OnWebSocketClosed(WebSocket webSocket, WebSocketStatusCodes code, string message)
     {
         MessageBox.Instance.PrintMessage("WebSocket 正在关闭");
@@ -197,6 +262,32 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
         return resultJson;
     }
     
+    // 新增的 JsonParserDamage 用于解析 damage_percent 数据
+    private DamageData JsonParserDamage(string message)
+    {
+        MessageBox.Instance.PrintMessage("解析 damage_percent Json数据");
+
+        JsonData jsonData = JsonMapper.ToObject(message);
+
+        // 提取 damage_percent 数据
+        float damagePercent1 = (float)jsonData["value"]["features"]["damage_percent_1"]["properties"]["value"];
+        float damagePercent2 = (float)jsonData["value"]["features"]["damage_percent_2"]["properties"]["value"];
+        float damagePercent3 = (float)jsonData["value"]["features"]["damage_percent_3"]["properties"]["value"];
+        float damagePercent4 = (float)jsonData["value"]["features"]["damage_percent_4"]["properties"]["value"];
+        float damagePercent5 = (float)jsonData["value"]["features"]["damage_percent_5"]["properties"]["value"];
+
+        // 创建并返回 DamagePercentData 数据结构
+        DamageData result = new DamageData()
+        {
+            damage_percent_1 = damagePercent1,
+            damage_percent_2 = damagePercent2,
+            damage_percent_3 = damagePercent3,
+            damage_percent_4 = damagePercent4,
+            damage_percent_5 = damagePercent5
+        };
+
+        return result;
+    }
     //Send发送订阅等待connecting
     IEnumerator Subscription()
     {

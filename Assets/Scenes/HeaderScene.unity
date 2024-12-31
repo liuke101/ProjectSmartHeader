@@ -5943,6 +5943,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 586650310}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d6a75c0379c5f1a478b8cb317a1da5b6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586650312}
     - targetCorrespondingSourceObject: {fileID: -5140312746825889305, guid: d6a75c0379c5f1a478b8cb317a1da5b6,
         type: 3}
       insertIndex: -1
@@ -12025,6 +12029,7 @@ MonoBehaviour:
   - {fileID: 212775048}
   - {fileID: 213020402}
   - {fileID: 224292806}
+  - {fileID: 231791208}
   - {fileID: 237291450}
   - {fileID: 243913212}
   - {fileID: 247746222}
@@ -14281,6 +14286,24 @@ MonoBehaviour:
   scaleDuration: 0.5
   offsetY: 10
   scaleAdjustment: 200
+--- !u!114 &586650312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586650306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96f58a58338c4819a2f862994edc1673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BombObjects:
+  - {fileID: 984272397}
+  - {fileID: 1920799441}
+  - {fileID: 1982639127}
+  - {fileID: 1901072243}
+  - {fileID: 231791203}
 --- !u!1 &592036820 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1491388397002101938, guid: 9642200edee8be540adb4e65290bb01b,
@@ -21388,6 +21411,18 @@ MonoBehaviour:
       - m_Target: {fileID: 489098003}
         m_TargetAssemblyTypeName: SpawnBombController, Assembly-CSharp
         m_MethodName: SpawnBomb
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 586650312}
+        m_TargetAssemblyTypeName: DamagePercentTest, Assembly-CSharp
+        m_MethodName: SpawnDamagePercent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -34164,12 +34199,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   URL: ws://ditto:ditto@10.151.1.109:8080/ws/2
-  SubscribeMessage: START-SEND-EVENTS?filter=eq(thingId,"edu.whut.cs.iot.se:explosion")
+  thingId1: edu.whut.cs.iot.se:ship
+  thingId2: edu.whut.cs.iot.se:construction
   SubscribeACK: START-SEND-EVENTS:ACK
   distanceText: {fileID: 1398485194}
   modelTransform: {fileID: 586650307}
   statusTextParent: {fileID: 761177577}
   statusText: {fileID: 258845910}
+  damageObject1: {fileID: 984272397}
+  damageObject2: {fileID: 1920799441}
+  damageObject3: {fileID: 1982639127}
+  damageObject4: {fileID: 1901072243}
+  damageObject5: {fileID: 231791203}
   OnExplosiveSourceMessageReceived:
     m_PersistentCalls:
       m_Calls:
@@ -53936,6 +53977,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.r
       value: 0.23899364
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050402772611800608, guid: 9cb18ffbab74fad4f9b3f152a3518496,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8834403891297850014, guid: 9cb18ffbab74fad4f9b3f152a3518496,
         type: 3}
