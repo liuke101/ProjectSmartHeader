@@ -35081,7 +35081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c7d2fad64614022a6fd609ea7d7ba1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  URL: ws://ditto:ditto@10.151.1.109:8080/ws/2
+  URL: ws://ditto:ditto@localhost:8080/ws/2
   SubscribeMessage: START-SEND-EVENTS?filter=eq(thingId,"edu.whut.cs.iot.se:explosion")
   SubscribeACK: START-SEND-EVENTS:ACK
   distanceText: {fileID: 1398485194}
@@ -35115,10 +35115,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09c4e9beb5a1814bb8ef5aa6716d047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  URL: ws://ditto:ditto@10.151.1.109:8080/ws/2
+  URL: ws://ditto:ditto@localhost:8080/ws/2
   SubscribeMessage: START-SEND-EVENTS?filter=eq(thingId,"edu.whut.cs.iot.se:construction")
   SubscribeACK: START-SEND-EVENTS:ACK
-  damageDecalManager: {fileID: 0}
+  damageDecalManager: {fileID: -1509138513256813824, guid: b1d64726c081c0e4ab1442641690b0c5,
+    type: 3}
   OnDamageMessageReceived:
     m_PersistentCalls:
       m_Calls:

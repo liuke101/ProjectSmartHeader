@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 235621827270616767}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.631762, y: 146.18608, z: -7}
+  m_LocalPosition: {x: 13.165599, y: 146.21623, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -71,11 +71,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   decalProjector: {fileID: 5240141317127032697}
   damagePositions:
-  - {x: 5.1425395, y: 145.17511, z: -10.650943}
-  - {x: 4.58, y: 144.78679, z: -7.1956573}
-  - {x: 7.5346856, y: 145.82523, z: -7.0000005}
-  - {x: 9.655367, y: 145.80812, z: -7}
-  - {x: 12.631762, y: 146.18608, z: -7}
+  - {x: 4.7770443, y: 144.80887, z: -10.658933}
+  - {x: 4.58, y: 145.64583, z: -7.247521}
+  - {x: 7.694459, y: 145.77425, z: -7}
+  - {x: 10.24792, y: 144.86511, z: -7}
+  - {x: 13.165599, y: 146.21623, z: -7}
   damageMaterials:
   - {fileID: 2100000, guid: c5a47618782535044860b7b2d6b42cb2, type: 2}
   - {fileID: 2100000, guid: 9b11c526b05aa5148a6a38ebb1487906, type: 2}

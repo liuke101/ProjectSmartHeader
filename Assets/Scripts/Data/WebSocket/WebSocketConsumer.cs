@@ -12,7 +12,7 @@ using TMPro;
 public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
 {
     [Header("WebSocket")]
-    public string URL = "ws://ditto:ditto@10.151.1.109:8080/ws/2";
+    public string URL = "ws://ditto:ditto@localhost:8080/ws/2";
     public string SubscribeMessage = "START-SEND-EVENTS?filter=eq(thingId,\"edu.whut.cs.iot.se:explosion\")";
     public string SubscribeACK = "START-SEND-EVENTS:ACK";
     private WebSocket WebSocket;

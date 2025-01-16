@@ -130,7 +130,7 @@ Mesh:
     m_Tangents:
       m_NumItems: 130
       m_Range: 1.0010016
-      m_Start: -0.0010016554
+      m_Start: -0.001001655
       m_Data: ff43f07f06ff77f0bf06ff3bf0bf03ff57f03f07ff73f0bf04ff37f0bf03ff63f0bf07ff5bf0ff03ff23f0bf02ff4bf03f06ff37f07f01ff03f0bf01ff47f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff07f07f00ff0700
       m_BitSize: 10
     m_Weights:
