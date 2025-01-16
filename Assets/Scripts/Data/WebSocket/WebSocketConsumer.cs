@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using UnityEngine;
@@ -13,7 +13,7 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
 {
     [Header("WebSocket")]
     public string URL = "ws://ditto:ditto@10.151.1.109:8080/ws/2";
-    public string SubscribeMessage = "START-SEND-EVENTS?filter=eq(thingId,\"edu.whut.cs.iot.se:ship\")";
+    public string SubscribeMessage = "START-SEND-EVENTS?filter=eq(thingId,\"edu.whut.cs.iot.se:explosion\")";
     public string SubscribeACK = "START-SEND-EVENTS:ACK";
     private WebSocket WebSocket;
     
@@ -115,7 +115,7 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     
     private void OnWebSocketOpen(WebSocket webSocket) 
     {
-        MessageBox.Instance.PrintMessage("WebSocket 开启成功");
+        MessageBox.Instance.PrintMessage("爆源数据订阅开启成功");
         // 开启订阅协程
         SubscriptionCoroutine = StartCoroutine(Subscription());
     }
@@ -125,7 +125,7 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
         // 如果接收到ACK，停止协程
         if(message == SubscribeACK) 
         {
-            MessageBox.Instance.PrintMessage("WebSocket 订阅成功, 关闭协程");
+            MessageBox.Instance.PrintMessage("爆源数据订阅成功, 关闭协程");
             StopCoroutine(SubscriptionCoroutine);
         }
         // 如果是json爆源数据
@@ -134,12 +134,15 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
             //处理数据后入队
             //CustomerQueue.Enqueue(JsonParser(message));
             
+            Debug.Log("接收到爆源信息");
             //将json解析为项目所用数据结构
             ExplosiveSourceData data = JsonMapper.ToObject<ExplosiveSourceData>(JsonParser(message));
              
+            Debug.Log("解析完成");
             //广播有效数据
             if(data != null)
             {
+                Debug.Log("爆源订阅不为空");
                 OnExplosiveSourceMessageReceived?.Invoke(data);
                 MessageBox.Instance.PrintExplosionData(data);
                 // 计算爆源和模型的距离
@@ -158,23 +161,23 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
     
     private void OnWebSocketClosed(WebSocket webSocket, WebSocketStatusCodes code, string message)
     {
-        MessageBox.Instance.PrintMessage("WebSocket 正在关闭");
+        MessageBox.Instance.PrintMessage("爆源数据订阅正在关闭");
     
         if (code == WebSocketStatusCodes.NormalClosure)
         {
-            MessageBox.Instance.PrintMessage("WebSocket 关闭成功");
+            MessageBox.Instance.PrintMessage("爆源数据订阅关闭成功");
         }
         else 
         {
             // Error
-            MessageBox.Instance.PrintMessage("WebSocket 发生了错误" + code);
+            MessageBox.Instance.PrintMessage("爆源数据订阅WebSocket 发生了错误" + code);
         }
     }
 
     //将json解析为项目所用格式
     private string JsonParser(string message)
     {
-        MessageBox.Instance.PrintMessage("解析Json数据");
+        MessageBox.Instance.PrintMessage("解析爆源数据");
         
         // 解析 JSON 数据
         JsonData jsonData = JsonMapper.ToObject(message);
@@ -206,7 +209,7 @@ public class WebSocketConsumer : MonoSingleton<WebSocketConsumer>
             if (WebSocket.IsOpen)
             {
                 WebSocket.Send(SubscribeMessage);
-                MessageBox.Instance.PrintMessage("发送 WebSocket 订阅消息");
+                MessageBox.Instance.PrintMessage("发送爆源数据订阅消息");
             }
             
             yield return new WaitForSeconds(1.0f);

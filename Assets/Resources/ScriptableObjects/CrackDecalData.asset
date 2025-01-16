@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01db079b84537b84bae8c77d8f5ed1b2, type: 3}
+  m_Name: CrackDecalData
+  m_EditorClassIdentifier: 
+  CrackDecalInfos:
+  - DamageLevel: 1
+    CrackDecalPrefab: {fileID: 235621827270616767, guid: b1d64726c081c0e4ab1442641690b0c5,
+      type: 3}
+    DecalSize: 2
+  - DamageLevel: 2
+    CrackDecalPrefab: {fileID: 235621827270616767, guid: b1d64726c081c0e4ab1442641690b0c5,
+      type: 3}
+    DecalSize: 2
+  - DamageLevel: 3
+    CrackDecalPrefab: {fileID: 235621827270616767, guid: b1d64726c081c0e4ab1442641690b0c5,
+      type: 3}
+    DecalSize: 2

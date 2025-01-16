@@ -1,0 +1,34 @@
+{
+    "headers": {
+        "correlation-id": "090397",
+        "content-type": "application/merge-patch+json"
+    },
+    "path": "/",
+    "topic": "edu.whut.cs.iot.se/explosion/things/twin/commands/modify",
+    "value": {
+        "features": {
+            "x_coordinate": {
+                "properties": {
+                    "value": 100.0
+                }
+            },
+            "strike_level": {
+                "properties": {
+                    "value": 4
+                }
+            },
+            "type": {
+                "properties": {
+                    "value": "堵口爆"
+                }
+            },
+            "y_coordinate": {
+                "properties": {
+                    "value": 100.0
+                }
+            }
+        },
+        "policyId": "ditto.default:policy",
+        "thingId": "edu.whut.cs.iot.se:explosion"
+    }
+}
