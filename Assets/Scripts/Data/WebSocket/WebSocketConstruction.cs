@@ -12,7 +12,7 @@ using TMPro;
 public class WebSocketConstruction : MonoSingleton<WebSocketConstruction>
 {
     [Header("WebSocket")]
-    public string URL = "ws://ditto:ditto@localhost:8080/ws/2";
+    public string URL = "ws://ditto:ditto@192.168.0.60:8080/ws/2";
     public string SubscribeMessage = "START-SEND-EVENTS?filter=eq(thingId,\"edu.whut.cs.iot.se:construction\")";
     public string SubscribeACK = "START-SEND-EVENTS:ACK";
     private WebSocket WebSocket;
@@ -85,7 +85,7 @@ public class WebSocketConstruction : MonoSingleton<WebSocketConstruction>
             DamageData damageData = JsonMapper.ToObject<DamageData>(JsonParser(message));
             if (damageData != null)
             {
-                Debug.Log("结构损伤数据接收并广播...");
+                // Debug.Log("结构损伤数据接收并广播...");
                 // 广播结构损伤数据
                 OnDamageMessageReceived?.Invoke(damageData);
                 MessageBox.Instance.PrintDamageData(damageData);

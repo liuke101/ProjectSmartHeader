@@ -129,9 +129,9 @@ Mesh:
       m_BitSize: 10
     m_Tangents:
       m_NumItems: 130
-      m_Range: 1.2503855
-      m_Start: -0.25038636
-      m_Data: e83b603e01e503703e02f0c3b03e06e83f80be03ea5b107f0de61f90be04ed8b00ff0cf52f813e03ec83207f0ff773a13f1defab40ff12f9a7c1bf21fd77f2bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3b03
+      m_Range: 1.2502674
+      m_Start: -0.2502685
+      m_Data: e83b603e01e503703e02f0c3b03e06e83f80be03ea5b107f0de61f90be04ed8b00ff0cf52b813e03ec83207f0ff773a1ff1cefab40ff12f9a7c1bf21fd77f2bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3bf3bf33ff3b03
       m_BitSize: 10
     m_Weights:
       m_NumItems: 0
