@@ -21,9 +21,15 @@ public class Bomb : MonoBehaviour
     [HideInInspector]public int StrikeLevel;
     private bool bHasBoom = false;  //已爆炸过
     
+    // 删除原有public字段绑定
+    private ExplosionCamera _explosionCamera;
     
     private void Awake()
     {
+        // 动态查找场景中的CameraManager
+        GameObject cameraManager = GameObject.Find("--GlobalScripts--");
+        if (cameraManager != null)
+            _explosionCamera = cameraManager.GetComponent<ExplosionCamera>();
         gameObject.layer = LayerMask.NameToLayer("Bomb"); //设置炸弹层
         GetComponent<Rigidbody>().excludeLayers = LayerMask.GetMask("Bomb"); //排除炸弹之间的碰撞
         GetComponent<Collider>().excludeLayers = LayerMask.GetMask("Bomb"); //排除炸弹之间的碰撞
@@ -53,6 +59,10 @@ public class Bomb : MonoBehaviour
     
     protected virtual void Explosion()
     {
+        // 安全调用
+        // 在Explosion()方法中
+        if (_explosionCamera != null)
+            _explosionCamera.TriggerExplosion(transform.position);  // 使用实际爆炸位置
         //爆炸特效和爆炸冲击波
         GameObject ExplosionVFX = BombTypeData?.GetAssetByBombType(BombType).ExplosionVFX;
         if(ExplosionVFX!=null)
